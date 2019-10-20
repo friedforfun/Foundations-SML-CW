@@ -172,15 +172,15 @@ findme   "x" ["x", "x1", "x11", "x111"];
 val vx = (ID "x");
 val vy = (ID "y");
 val vz = (ID "z");
-val t1 = (LAM("x",vx));
-val t2 = (LAM("y",vx));
-val t3 = (APP(APP(t1,t2),vz));
-val t4 = (APP(t1,vz));
-val t5 = (APP(t3,t3));
-val t6 = (LAM("x",(LAM("y",(LAM("z",(APP(APP(vx,vz),(APP(vy,vz))))))))));
-val t7 = (APP(APP(t6,t1),t1));
-val t8 = (LAM("z", (APP(vz,(APP(t1,vz))))));
-val t9 = (APP(t8,t3));
+val t1 = (LAM("x",vx)); (* Identity *)
+val t2 = (LAM("y",vx)); (* y is arg, body of x *)
+val t3 = (APP(APP(t1,t2),vz)); (* (t1 applied to t2) z  *)
+val t4 = (APP(t1,vz)); (* t1 applied to z *)
+val t5 = (APP(t3,t3)); (* t3 applied to t3 *)
+val t6 = (LAM("x",(LAM("y",(LAM("z",(APP(APP(vx,vz),(APP(vy,vz)))))))))); (* (lambda-xyz).xz(yz) *)
+val t7 = (APP(APP(t6,t1),t1)); (* ((t6,t1)t1) *)
+val t8 = (LAM("z", (APP(vz,(APP(t1,vz)))))); (* (lambda-z.(z(t1,z))) *)
+val t9 = (APP(t8,t3)); (* (t8,t3) *)
 
 (*Note that printmreduce t7; gives:
 (((\x.(\y.(\z.((x z) (y z))))) (\x.x)) (\x.x))-->
