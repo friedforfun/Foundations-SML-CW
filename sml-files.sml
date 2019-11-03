@@ -12,8 +12,8 @@ fun free id1 (ID id2) = if (id1 = id2) then  true else false|
     free id1 (APP(e1,e2))= (free id1 e1) orelse (free id1 e2) | 
     free id1 (LAM(id2, e1)) = if (id1 = id2) then false else (free id1 e1);
 
-(* finds new variables which are fresh  in l and different from id*)
-    
+(* finds new variables which are fresh  in l (l is a list) and different from id*)
+    (* renames id to id^1 if id^1 is reserved rename id^1 to id^11 check again -> repeat till find unreserved id*)
 fun findme id l = (let val id1 = id^"1"  in if not (List.exists (fn x => id1 = x) l) then id1 else (findme id1 l) end);
 
 
@@ -21,11 +21,11 @@ fun findme id l = (let val id1 = id^"1"  in if not (List.exists (fn x => id1 = x
 
 fun freeVars (ID id2)       = [id2]
   | freeVars (APP(e1,e2))   = freeVars e1 @ freeVars e2
-  | freeVars (LAM(id2, e1)) = List.filter (fn x => not (x = id2)) (freeVars e1);
+  | freeVars (LAM(id2, e1)) = List.filter (fn x => not (x = id2)) (freeVars e1); (* List.filter filters out all vars of id2 *)
 
 
 (*does substitution avoiding the capture of free variables*)
-
+  (* id1 [id := e]*)
 fun subs e id (ID id1) =  if id = id1 then e else (ID id1) |
     subs e id (APP(e1,e2)) = APP(subs e id e1, subs e id e2)|
     subs e id (LAM(id1,e1)) = (if id = id1 then LAM(id1,e1) else
