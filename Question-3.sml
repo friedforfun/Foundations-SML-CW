@@ -29,6 +29,7 @@ val bt6 = (BLAM((BLAM((BLAM((BAPP(BAPP(bvx,bvz),(BAPP(bvy,bvz)))))))))); (* \\\3
 val bt7 = (BAPP(BAPP(bt6,bt1),bt1)); (* ((\\\31(21))(\1))(\1) *)
 val bt8 = (BLAM((BAPP(bvz,(BAPP(bt1,bvz)))))); (* ( \1((\1)1) ) THIS WILL NOT PRINT CORRECTLY BY DEFAULT *)
 val bt9 = (BAPP(bt8,bt3)); (* (\1((\1)1))((\1)(\2)3) WONT PRINT BY DEFAULT *)
+<<<<<<< HEAD
 
 
 datatype IBLEXP =  IBAPP of IBLEXP * IBLEXP | IBLAM of string *  IBLEXP |  IBID of string;
@@ -45,3 +46,5 @@ val ibt6 = (IBLAM((IBLAM((IBLAM((APP(APP(ibvx,ibvz),(APP(ibvy,ibvz)))))))))); (*
 val ibt7 = (APP(APP(ibt6,ibt1),ibt1)); (* (([][][]31(21))([]1))([]1) *)
 val ibt8 = (IBLAM((APP(ibvz,(APP(ibt1,ibvz)))))); (* []1(([]1)1) *)
 val ibt9 = (APP(ibt8,ibt3)); (* ([]1(([]1)1))(([]1)([]2)3) *)
+=======
+>>>>>>> origin/master
