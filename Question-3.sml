@@ -29,3 +29,19 @@ val bt6 = (BLAM((BLAM((BLAM((BAPP(BAPP(bvx,bvz),(BAPP(bvy,bvz)))))))))); (* \\\3
 val bt7 = (BAPP(BAPP(bt6,bt1),bt1)); (* ((\\\31(21))(\1))(\1) *)
 val bt8 = (BLAM((BAPP(bvz,(BAPP(bt1,bvz)))))); (* ( \1((\1)1) ) THIS WILL NOT PRINT CORRECTLY BY DEFAULT *)
 val bt9 = (BAPP(bt8,bt3)); (* (\1((\1)1))((\1)(\2)3) WONT PRINT BY DEFAULT *)
+
+
+datatype IBLEXP =  IBAPP of IBLEXP * IBLEXP | IBLAM of string *  IBLEXP |  IBID of string;
+
+val ibvx = (IBID 1);
+val ibvy = (IBID 2);
+val ibvz = (IBID 3);
+val ibt1 = (IBLAM(ibvx)); (* []1 *)
+val ibt2 = (IBLAM(ibvx)); (* []2 *)
+val ibt3 = (APP(APP(ibt1,ibt2),ibvz)); (* ([]1)([]2)3  *)
+val ibt4 = (APP(ibt1,ibvz)); (* ([]1)3 *)
+val ibt5 = (APP(ibt3,ibt3)); (* ([]1)([]2)3 (([]1)([]2)3) *)
+val ibt6 = (IBLAM((IBLAM((IBLAM((APP(APP(ibvx,ibvz),(APP(ibvy,ibvz)))))))))); (* [][][]31(21) *)
+val ibt7 = (APP(APP(ibt6,ibt1),ibt1)); (* (([][][]31(21))([]1))([]1) *)
+val ibt8 = (IBLAM((APP(ibvz,(APP(ibt1,ibvz)))))); (* []1(([]1)1) *)
+val ibt9 = (APP(ibt8,ibt3)); (* ([]1(([]1)1))(([]1)([]2)3) *)
