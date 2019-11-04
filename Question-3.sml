@@ -1,3 +1,4 @@
+use "sml-files.sml";
 
 datatype ILEXP = IAPP of ILEXP * ILEXP | ILAM of string * ILEXP | IID of string;
 
@@ -29,7 +30,6 @@ val bt6 = (BLAM((BLAM((BLAM((BAPP(BAPP(bvx,bvz),(BAPP(bvy,bvz)))))))))); (* \\\3
 val bt7 = (BAPP(BAPP(bt6,bt1),bt1)); (* ((\\\31(21))(\1))(\1) *)
 val bt8 = (BLAM((BAPP(bvz,(BAPP(bt1,bvz)))))); (* ( \1((\1)1) ) THIS WILL NOT PRINT CORRECTLY BY DEFAULT *)
 val bt9 = (BAPP(bt8,bt3)); (* (\1((\1)1))((\1)(\2)3) WONT PRINT BY DEFAULT *)
-<<<<<<< HEAD
 
 
 datatype IBLEXP =  IBAPP of IBLEXP * IBLEXP | IBLAM of string *  IBLEXP |  IBID of string;
@@ -39,12 +39,26 @@ val ibvy = (IBID 2);
 val ibvz = (IBID 3);
 val ibt1 = (IBLAM(ibvx)); (* []1 *)
 val ibt2 = (IBLAM(ibvx)); (* []2 *)
-val ibt3 = (APP(APP(ibt1,ibt2),ibvz)); (* ([]1)([]2)3  *)
-val ibt4 = (APP(ibt1,ibvz)); (* ([]1)3 *)
-val ibt5 = (APP(ibt3,ibt3)); (* ([]1)([]2)3 (([]1)([]2)3) *)
-val ibt6 = (IBLAM((IBLAM((IBLAM((APP(APP(ibvx,ibvz),(APP(ibvy,ibvz)))))))))); (* [][][]31(21) *)
-val ibt7 = (APP(APP(ibt6,ibt1),ibt1)); (* (([][][]31(21))([]1))([]1) *)
-val ibt8 = (IBLAM((APP(ibvz,(APP(ibt1,ibvz)))))); (* []1(([]1)1) *)
-val ibt9 = (APP(ibt8,ibt3)); (* ([]1(([]1)1))(([]1)([]2)3) *)
-=======
->>>>>>> origin/master
+val ibt3 = (IBAPP(IBAPP(ibt1,ibt2),ibvz)); (* ([]1)([]2)3  *)
+val ibt4 = (IBAPP(ibt1,ibvz)); (* ([]1)3 *)
+val ibt5 = (IBAPP(ibt3,ibt3)); (* ([]1)([]2)3 (([]1)([]2)3) *)
+val ibt6 = (IBLAM((IBLAM((IBLAM((IBAPP(IBAPP(ibvx,ibvz),(IBAPP(ibvy,ibvz)))))))))); (* [][][]31(21) *)
+val ibt7 = (IBAPP(IBAPP(ibt6,ibt1),ibt1)); (* (([][][]31(21))([]1))([]1) *)
+val ibt8 = (IBLAM((IBAPP(ibvz,(IBAPP(ibt1,ibvz)))))); (* []1(([]1)1) *)
+val ibt9 = (IBAPP(ibt8,ibt3)); (* ([]1(([]1)1))(([]1)([]2)3) *)
+
+
+datatype CLEXP =  CAPP of CLEXP * CLEXP | CLAM of string *  CLEXP |  CID of string;
+
+val vx = (CID 1);
+val vy = (CID 2);
+val vz = (CID 3);
+val t1 = (CLAM(vx)); (* Identity *)
+val t2 = (CLAM(vx)); (* y is arg, body of x *)
+val t3 = (CAPP(CAPP(t1,t2),vz)); (* (t1 Capplied to t2) z  *)
+val t4 = (CAPP(t1,vz)); (* t1 Capplied to z *)
+val t5 = (CAPP(t3,t3)); (* t3 Capplied to t3 *)
+val t6 = (CLAM((CLAM((CLAM((CAPP(CAPP(vx,vz),(CAPP(vy,vz)))))))))); (* (Clambda-xyz).xz(yz) *)
+val t7 = (CAPP(CAPP(t6,t1),t1)); (* ((t6,t1)t1) *)
+val t8 = (CLAM((CAPP(vz,(CAPP(t1,vz)))))); (* (lambda-z.(z(t1,z))) *)
+val t9 = (CAPP(t8,t3)); (* (t8,t3) *)
