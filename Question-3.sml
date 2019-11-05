@@ -48,7 +48,7 @@ val ibt8 = (IBLAM(IBAPP(ibvz,(IBAPP(ibt1,ibvz))))); (* []<<1>[]1>1 *)
 val ibt9 = (IBAPP(ibt8,ibt3)); (* <<3><[]2>[]1> []<<1>[]1>1 *)
 
 (* M'' - Combinatory logic *)
-datatype CLEXP =  CAPP of CLEXP * CLEXP | CI of "I''" | CK of "K''" | CS of "S''" |  CID of string;
+datatype CLEXP =  CAPP of CLEXP * CLEXP | CI | CK | CS |  CID of string; (*SYNTAX ERROR - CI/CK/CS of *** *)
 
 val cvx = (CID "x");
 val cvy = (CID "y");
