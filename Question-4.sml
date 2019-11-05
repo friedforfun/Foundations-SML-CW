@@ -7,7 +7,7 @@ fun printILEXP (IID v) = (print v; print " ") |
 
 (* omega: print de Bruijn normal notation *)
 fun printBLEXP (BID v) = print (Int.toString v) |
-	printBLEXP (BLAM (e)) = (print "(\\ "; printBLEXP(e); print ")") |
+	printBLEXP (BLAM (e)) = (print "(\\"; printBLEXP(e); print ")") |
 	printBLEXP (BAPP (e1,e2)) = (print "("; printBLEXP (e1); print " "; printBLEXP (e2); print ")");
 
 (* omega Prime: print de Bruijn in item notation *)
