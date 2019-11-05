@@ -7,13 +7,13 @@ val ivy = (IID "y");
 val ivz = (IID "z");
 val it1 = (ILAM("x",ivx)); (* [x]x *) 
 val it2 = (ILAM("y",ivx));  (* [y]x *)
-val it3 = (IAPP(IAPP(it1,it2),ivz)); (* <z><it2>it1 *)
-val it4 = (IAPP(it1,ivz)); (* <z>it1 *)
+val it3 = (IAPP(ivz, IAPP(it2,it1))); (* <z><it2>it1 *)
+val it4 = (IAPP(ivz,it1)); (* <z>it1 *)
 val it5 = (IAPP(it3,it3)); (* <it3>it3 *)
-val it6 = (ILAM("x",(ILAM("y",(ILAM("z",(IAPP(IAPP(ivx,ivz),(IAPP(ivy,ivz)))))))))); (* [x][y][z]<<z>y><z>x *)
-val it7 = (IAPP(IAPP(it6,it1),it1)); (* <it1><it1>it6 *)
-val it8 = (ILAM("z", (IAPP(ivz,(IAPP(it1,ivz)))))); (* [z]<<z>it1>z *)
-val it9 = (IAPP(it8,it3)); (* <it3>it8 *)
+val it6 = (ILAM("x",(ILAM("y",(ILAM("z",(IAPP (IAPP(ivz, ivy), (IAPP(ivz, ivx)))))))))); (* [x][y][z]<<z>y><z>x *)
+val it7 = (IAPP(it1, IAPP(it1,it6))); (* <it1><it1>it6 *)
+val it8 = (ILAM("z", (IAPP(IAPP(ivz,it1), ivz)))); (* [z]<<z>it1>z *)
+val it9 = (IAPP(it3,it8)); (* <it3>it8 *)
 
 (* de Bruijn *)
 datatype BLEXP = BAPP of BLEXP * BLEXP | BLAM of BLEXP | BID of int;
@@ -39,16 +39,16 @@ val ibvy = (IBID 2);
 val ibvz = (IBID 3);
 val ibt1 = (IBLAM(ibvx)); (* []1 *)
 val ibt2 = (IBLAM(ibvx)); (* []2 *)
-val ibt3 = (IBAPP(IBAPP(ibt1,ibt2),ibvz)); (* <3><[]2>[]1 *)
-val ibt4 = (IBAPP(ibt1,ibvz)); (* <3>[]1 *)
+val ibt3 = (IBAPP(ibvz, IBAPP(ibt2,ibt1))); (* <3><[]2>[]1 *)
+val ibt4 = (IBAPP(ibvz,ibt1)); (* <3>[]1 *)
 val ibt5 = (IBAPP(ibt3,ibt3)); (* <<3><[]2>[]1> <3><[]2>[]1 *)
-val ibt6 = (IBLAM(IBLAM(IBLAM(IBAPP(IBAPP(ibvx,ibvz),(IBAPP(ibvy,ibvz))))))); (* [][][]<<1>2><1>3 *)
-val ibt7 = (IBAPP(IBAPP(ibt6,ibt1),ibt1)); (* <[]1><[]1>[][][]<<1>2><1>3 *)
-val ibt8 = (IBLAM(IBAPP(ibvz,(IBAPP(ibt1,ibvz))))); (* []<<1>[]1>1 *)
-val ibt9 = (IBAPP(ibt8,ibt3)); (* <<3><[]2>[]1> []<<1>[]1>1 *)
+val ibt6 = (IBLAM(IBLAM(IBLAM(IBAPP(IBAPP(ibvz, ibvy), IBAPP(ibvz, ibvx)))))); (* [][][]<<1>2><1>3 *)
+val ibt7 = (IBAPP(ibt1, IBAPP(ibt1, ibt6))); (* <[]1><[]1>[][][]<<1>2><1>3 *)
+val ibt8 = (IBLAM(IBAPP((IBAPP(ibvz, ibt1)), ibvz))); (* []<<1>[]1>1 *)
+val ibt9 = (IBAPP(ibt3,ibt8)); (* <<3><[]2>[]1> []<<1>[]1>1 *)
 
 (* M'' - Combinatory logic *)
-datatype CLEXP =  CAPP of CLEXP * CLEXP | CI | CK | CS |  CID of string; (*SYNTAX ERROR - CI/CK/CS of *** *)
+datatype COM =  CAPP of COM * COM | CI | CK | CS |  CID of string;
 
 val cvx = (CID "x");
 val cvy = (CID "y");
