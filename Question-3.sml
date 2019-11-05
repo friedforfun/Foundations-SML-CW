@@ -16,7 +16,7 @@ val it8 = (ILAM("z", (IAPP(ivz,(IAPP(it1,ivz)))))); (* [z]<<z>it1>z *)
 val it9 = (IAPP(it8,it3)); (* <it3>it8 *)
 
 (* de Bruijn *)
-datatype BLEXP = BAPP of BLEXP * BLEXP | BLAM of string * BLEXP | BID of string;
+datatype BLEXP = BAPP of BLEXP * BLEXP | BLAM of string * BLEXP | BID of int;
 
 val bvx = (BID 1);
 val bvy = (BID 2);
@@ -32,7 +32,7 @@ val bt8 = (BLAM(BAPP(bvz,(BAPP(bt1,bvz))))); (* ( \1((\1)1) ) THIS WILL NOT PRIN
 val bt9 = (BAPP(bt8,bt3)); (* (\1((\1)1))((\1)(\2)3) WONT PRINT BY DEFAULT *)
 
 (* de Bruijn item notation *)
-datatype IBLEXP =  IBAPP of IBLEXP * IBLEXP | IBLAM of string *  IBLEXP |  IBID of string;
+datatype IBLEXP =  IBAPP of IBLEXP * IBLEXP | IBLAM of string *  IBLEXP |  IBID of int;
 
 val ibvx = (IBID 1);
 val ibvy = (IBID 2);
