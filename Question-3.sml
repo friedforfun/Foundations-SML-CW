@@ -47,18 +47,18 @@ val ibt7 = (IBAPP(IBAPP(ibt6,ibt1),ibt1)); (* (([][][]31(21))([]1))([]1) *)
 val ibt8 = (IBLAM((IBAPP(ibvz,(IBAPP(ibt1,ibvz)))))); (* []1(([]1)1) *)
 val ibt9 = (IBAPP(ibt8,ibt3)); (* ([]1(([]1)1))(([]1)([]2)3) *)
 
+datatype CLEXP =  CAPP of CLEXP * CLEXP | CI of "I''" | CK of "K''" | CS of "S''" |  CID of string;
 
-datatype CLEXP =  CAPP of CLEXP * CLEXP | CLAM of string *  CLEXP |  CID of string;
+val cvx = (CID "x");
+val cvy = (CID "y");
+val cvz = (CID "z");
+val ct1 = CI; (* I'' *)
+val ct2 = (CAPP(CK, cvx); (* K'' x *)
+val ct3 = (CAPP(CAPP(t1,t2),vz)); (* I'' (K'' x) z *)
+val ct4 = (CAPP(t1,vz)); (* I'' z *)
+val ct5 = (CAPP(t3,t3)); (* I''(K''x)z (I''(K''x)z) *)
+val ct6 = CS; (* (Clambda-xyz).xz(yz) *)
+val ct7 = CAPP(CAPP(t6,t1),t1); (* ((t6,t1)t1) *)
+val ct8 = CAPP(CAPP(CS, CI), CI);
+val ct9 = CAPP(t8,t3); (* (t8,t3) *)
 
-val vx = (CID 1);
-val vy = (CID 2);
-val vz = (CID 3);
-val t1 = (CLAM(vx)); (* Identity *)
-val t2 = (CLAM(vx)); (* y is arg, body of x *)
-val t3 = (CAPP(CAPP(t1,t2),vz)); (* (t1 Capplied to t2) z  *)
-val t4 = (CAPP(t1,vz)); (* t1 Capplied to z *)
-val t5 = (CAPP(t3,t3)); (* t3 Capplied to t3 *)
-val t6 = (CLAM((CLAM((CLAM((CAPP(CAPP(vx,vz),(CAPP(vy,vz)))))))))); (* (Clambda-xyz).xz(yz) *)
-val t7 = (CAPP(CAPP(t6,t1),t1)); (* ((t6,t1)t1) *)
-val t8 = (CLAM((CAPP(vz,(CAPP(t1,vz)))))); (* (lambda-z.(z(t1,z))) *)
-val t9 = (CAPP(t8,t3)); (* (t8,t3) *)
