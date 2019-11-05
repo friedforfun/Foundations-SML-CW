@@ -13,7 +13,7 @@ fun printBLEXP (BID v) = print (Int.toString v) |
 (* omega Prime: print de Bruijn in item notation *)
 fun printIBLEXP (IBID v) = print (Int.toString v) |
 	printIBLEXP (IBLAM (e)) = (print "[]"; printIBLEXP(e)) |
-	printIBLEXP (IBAPP (e1, e2)) = (print "<"; printIBLEXP(e1)); print ">"; printIBLEXP(e2));
+	printIBLEXP (IBAPP (e1, e2)) = (print "<"; printIBLEXP(e1); print ">"; printIBLEXP(e2) );
 
 (* M'': combinator *)
 fun printCOM (CID v) = print v |
@@ -21,3 +21,4 @@ fun printCOM (CID v) = print v |
 	printCOM (CK) = print "K''" |
 	printCOM (CS) = print "S''" |
 	printCOM (CAPP (e1, e2)) = (print "("; printCOM (e1); print " "; printCOM(e2); print ")");
+
