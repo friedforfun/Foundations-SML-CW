@@ -7,5 +7,5 @@ fun printILEXP (IID v) = (print v; print " ") |
 
 fun printBLEXP (BID v) = print v |
 	printBLEXP (BLAM (e)) = (print "(\\ "; printBLEXP(e); print ")") |
-	printBLEXP (BAPP) = ...;
+	printBLEXP (BAPP (e1,e2)) = (print "("; printBLEXP (e1); print " "; printBLEXP (e2); print ")");
 
