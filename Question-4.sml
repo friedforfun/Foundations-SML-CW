@@ -6,7 +6,6 @@ fun printILEXP (IID v) = (print v; print " ") |
 	printILEXP (IAPP (e1,e2)) = (print "<"; printILEXP e2; print ">"; printILEXP e1);
 
 (* omega: print de Bruijn normal notation *)
-fun printBLEXP (BID v) = print v |
+fun printBLEXP (BID u) = print u |
 	printBLEXP (BLAM (e)) = (print "(\\ "; printBLEXP(e); print ")") |
 	printBLEXP (BAPP (e1,e2)) = (print "("; printBLEXP (e1); print " "; printBLEXP (e2); print ")");
-
