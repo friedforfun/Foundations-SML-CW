@@ -14,3 +14,10 @@ fun printBLEXP (BID v) = print (int.toString v) |
 fun printIBLEXP (IBID v) = print (int.toString v) |
 	printIBLEXP (IBLAM (e)) = (print "[]"; printIBLEXP(e)) |
 	printIBLEXP (IBAPP (e1, e2)) = (print "<"; printIBLEXP(e1)); print ">"; printIBLEXP(e2));
+
+(* M'': combinator *)
+fun printCOM (CID v) = print v |
+	printCOM (CI) = print "I''" |
+	printCOM (CK) = print "K''" |
+	printCOM (CS) = print "S''" |
+	printCOM (CAPP (e1, e2)) = (print "("; printCOM (e1); print " "; printCOM(e2); print ")");
