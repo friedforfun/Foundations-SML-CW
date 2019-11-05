@@ -9,3 +9,8 @@ fun printILEXP (IID v) = (print v; print " ") |
 fun printBLEXP (BID v) = print (int.toString v) |
 	printBLEXP (BLAM (e)) = (print "(\\ "; printBLEXP(e); print ")") |
 	printBLEXP (BAPP (e1,e2)) = (print "("; printBLEXP (e1); print " "; printBLEXP (e2); print ")");
+
+(* omega Prime: print de Bruijn in item notation *)
+fun printIBLEXP (IBID v) = print (int.toString v) |
+	printIBLEXP (IBLAM (e)) = (print "[]"; printIBLEXP(e)) |
+	printIBLEXP (IBAPP (e1, e2)) = (print "<"; printIBLEXP(e1)); print ">"; printIBLEXP(e2));
