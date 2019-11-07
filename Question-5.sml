@@ -1,8 +1,8 @@
 use "Question-4.sml";
 
-fun CoTerm (v, v) = CI |
-	CoTerm (v, p) = if (not(free v p)) then CAPP(CK, p) else false |
-	CoTerm (v, p1, p2) = if ((not(free v p1)) andalso v = p2) then p1 else CAPP(CAPP(CS, CoTerm(v, p1)), CoTerm(v, p2));
+fun CoTerm (String v, String v) = CI |
+	CoTerm (String v, COM p) = if (not(free v p)) then CAPP(CK, p) else false |
+	CoTerm (String v, CAPP(p1, p2)) = if ((not(free v p1)) andalso v = p2) then p1 else CAPP(CAPP(CS, CoTerm(v, p1)), CoTerm(v, p2));
 
 fun Itran (ID id) = (IID id) |
 	Itran (LAM(v,e)) = (ILAM(v, Itran(e))) |
