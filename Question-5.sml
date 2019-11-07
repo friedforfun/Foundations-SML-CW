@@ -2,8 +2,10 @@ use "Question-4.sml";
 
 fun Ufree (CID id1) (CID id2) = if (id1 = id2) then true else false |
 	Ufree (CID id1) (CAPP(e1, e2)) = (Ufree id1 e1) orelse (Ufree id1 e2) |
-	Ufree (CID id1) (LAM(id2, e1)) = if (id1 = id2) then false else (Ufree id1 e1);
-		
+	Ufree (CID id1) CI = false |
+	Ufree (CID id1) CK = false |
+	Ufree (CID id1) CS = false;
+
 fun CoTerm (CID v, CID v) = CI |
 	CoTerm (CID v, COM p) = if (not(Ufree v p)) then CAPP(CK, p) else false |
 	CoTerm (CID v, CAPP(p1, p2)) = if ((not(Ufree v p1)) andalso v = p2) then p1 else CAPP(CAPP(CS, CoTerm(v, p1)), CoTerm(v, p2));
