@@ -22,3 +22,9 @@ fun printCOM (CID v) = print v |
 	printCOM (CS) = print "S''" |
 	printCOM (CAPP (e1, e2)) = (print "("; printCOM (e1); print " "; printCOM(e2); print ")");
 
+(* 
+fun freeVars (ID id2)       = [id2]
+  | freeVars (APP(e1,e2))   = freeVars e1 @ freeVars e2
+  | freeVars (LAM(id2, e1)) = List.filter (fn x => not (x = id2)) (freeVars e1); 
+*)
+
