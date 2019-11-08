@@ -1,16 +1,17 @@
 use "Question-4.sml";
-(*)
-fun Cfree (CID id1) (CID id2) = if (id1 = id2) then true else false |
-	Cfree (CID id) (CAPP(e1, e2)) = (Cfree id e1) orelse (Cfree id e2) |
-	Cfree (CID id) CI = false |
-	Cfree (CID id) CK = false |
-	Cfree (CID id) CS = false;
-(*)
+
+fun Cfree id1 (CID id2) = if (id1 = id2) then true else false |
+	Cfree id (CAPP(e1, e2)) = (Cfree id e1) orelse (Cfree id e2) |
+	Cfree id CI = false |
+	Cfree id CK = false |
+	Cfree id CS = false;
+
+(* is free in M': for fun. *)
 fun Ifree id1 (IID id2) = if (id1 = id2) then  true else false|
     Ifree id1 (IAPP(e1,e2))= (Ifree id1 e1) orelse (Ifree id1 e2) | 
     Ifree id1 (ILAM(id2, e1)) = if (id1 = id2) then false else (Ifree id1 e1);
 
-(*)
+(*
 
 fun CoTerm (CID v, CID v) = CI |
 	CoTerm (CID v, COM p) = if (not(Cfree v p)) then CAPP(CK, p) else false |
