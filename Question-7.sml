@@ -12,3 +12,9 @@ fun ClrDup [] = [] |
 	ClrDup (h::t) = h :: ClrDup (List.filter (fn x => x <> h) t) ;
 
 fun Subterms2 t = ClrDup(Subterms2d(t));
+
+
+fun PrintCOMlist [] =  print "" |
+	PrintCOMlist (h::t)= (printCOM h; print "\n"; PrintCOMlist t);
+
+fun printlistcomb t = PrintCOMlist(Subterms2(t));
