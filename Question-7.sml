@@ -1,4 +1,5 @@
-uss "Question-4.sml";
+use "Question-4.sml";
+
 fun Subterms2 (CID id) = [(CID id)] |
 	Subterms2 (CI) = [(CI)] |
 	Subterms2 (CK) = [(CK)] |
