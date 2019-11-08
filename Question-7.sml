@@ -1,4 +1,5 @@
 use "Question-4.sml";
+Control.Print.printDepth := 1024;
 
 fun Subterms2 (CID id) = [(CID id)] |
 	Subterms2 (CI) = [(CI)] |
