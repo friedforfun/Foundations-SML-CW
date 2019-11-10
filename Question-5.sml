@@ -17,9 +17,9 @@ fun Ifree id1 (IID id2) = if (id1 = id2) then  true else false |
 fun lhs (CAPP(e1, e2)) = e1;
 fun rhs (CAPP(e1,e2)) = e2;
 (*
-fun CoFun (v, (CID v2)) = if (v = v2) then CI else CAPP(CK, CID v2) |
-	CoFun (v, v2) = if not(Cfree v v2) then (CAPP(CK, v2)) 
-								else if not(Cfree v (lhs(v2))) andalso (v = (rhs(v2))) then lhs(v2)  
+fun CoFun v (CID v2) = if (v = v2) then CI else CAPP(CK, CID v2) |
+	CoFun v v2 = if not(Cfree v v2) then (CAPP(CK, v2)) 
+								else if not(Cfree v (lhs(v2))) andalso (v = (rhs(v2))) then lhs(v2) 
 							  	else (CAPP(CAPP(CS, CoFun(v, (lhs(v2)))), CoFun(v, (rhs(v2)))));
 *)						  		
 
