@@ -17,28 +17,26 @@ fun one_credex (CAPP(CI, e)) = e |
 	one_credex (CAPP(CAPP(CAPP(CS, e1), e2), e3)) = (CAPP(CAPP(e1, e3), CAPP(e2, e3))) ;
 
 
-(*
-fun find_credex (CAPP(e1, e2)) = 
-*)
+(* adds capp backward to list *)
+fun caddbackapp [] e2 = []|
+    caddbackapp (e1::l) e2 = (CAPP(e1,e2)):: (caddbackapp l e2);
 
-fun lbranch (CAPP(e1, e2)) = e1;
+(* adds capp forward to list *)
+fun caddfrontapp e1 [] = []|
+    caddfrontapp e1  (e2::l) = (CAPP(e1,e2)):: (caddfrontapp e1 l);
 
-fun list_credex [] = [] |
-	list_credex ((CAPP(e1, e2))::t) = if is_credex(CAPP(e1, e2)) then (CAPP(e1, e2))::[one_credex(CAPP(e1, e2))]::t 
-										else if has_credex(e1)  
+fun creduce (CID id) =  [(CID id)] | 
+	creduce (CI) = [(CI)] |
+	creduce (CK) = [(CK)] |
+	creduce (CS) = [(CS)] |
+	creduce (CAPP(e1,e2)) = (let val l1 = (creduce e1)
+				val l2 = (creduce e2)
+				val l3 = (caddbackapp l1 e2)				
+				val l4 = (caddfrontapp (List.last l1) l2)
+				val l5 = (List.last l4)
+				val l6 =  if (is_credex l5) then (creduce (one_credex l5)) else [l5]
+			    in l3 @ l4 @ l6
+			    end);
 
-fun credex t = if has_credex(t) then list_credex([t]) else raise Fail "this term has no redex";
 
-(*
-
-[ct9] [ct10] [ct11]
-
-fun	credex (CAPP(e1, e2)) = 
-								if is_credex(CAPP(e1, e2)) then
-									one_credex(CAPP(e1,e2))
-								else CAPP(credex(e1), credex(e2))
-							
-	
-*)
-	(*credex (CAPP(e1, e2)) = if has_credex(e1)
-*)
+fun	credex e = PrintCOMlist(ClrDup(creduce(e)));
