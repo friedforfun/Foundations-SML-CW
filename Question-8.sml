@@ -25,16 +25,16 @@ fun caddbackapp [] e2 = []|
 fun caddfrontapp e1 [] = []|
     caddfrontapp e1  (e2::l) = (CAPP(e1,e2)):: (caddfrontapp e1 l);
 
-fun creduce (CID id) =  [(CID id)] | 
-	creduce (CI) = [(CI)] |
-	creduce (CK) = [(CK)] |
-	creduce (CS) = [(CS)] |
-	creduce (CAPP(e1,e2)) = (let val l1 = (creduce e1)
-				val l2 = (creduce e2)
+fun cmreduce (CID id) =  [(CID id)] | 
+	cmreduce (CI) = [(CI)] |
+	cmreduce (CK) = [(CK)] |
+	cmreduce (CS) = [(CS)] |
+	cmreduce (CAPP(e1,e2)) = (let val l1 = (cmreduce e1)
+				val l2 = (cmreduce e2)
 				val l3 = (caddbackapp l1 e2)				
 				val l4 = (caddfrontapp (List.last l1) l2)
 				val l5 = (List.last l4)
-				val l6 =  if (is_credex l5) then (creduce (one_credex l5)) else [l5]
+				val l6 =  if (is_credex l5) then (cmreduce (one_credex l5)) else [l5]
 			    in l3 @ l4 @ l6
 			    end);
 
@@ -42,8 +42,8 @@ fun Printcredexlist [] =  print "" |
 	Printcredexlist (h::nil) = (printCOM h; print "\n") |
 	Printcredexlist (h::t)= (printCOM h; print "--> \n"; Printcredexlist t);
 
-fun numCredex l = List.length (ClrDup(creduce(l))) -1 ;
-
-fun printcredexnum t = ClrDup(creduce(t));
-
-fun	credex e = (Printcredexlist(ClrDup(creduce(e))); print (Int.toString(numCredex(e))); print " steps \n");
+(* ---Question 9--- *)
+fun numCredex l = List.length (ClrDup(cmreduce(l))) -1 ;
+fun printcredexnum t = ClrDup(cmreduce(t));
+(* ---------------- *)
+fun	credex e = (Printcredexlist(ClrDup(cmreduce(e))); print (Int.toString(numCredex(e))); print " steps \n");
