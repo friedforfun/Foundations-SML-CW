@@ -122,7 +122,7 @@ fun has_redex (ID id) = false |
     has_redex (APP(e1,e2)) = if (is_redex  (APP(e1,e2))) then true else
                               ((has_redex e1) orelse (has_redex e2));
 
-fun  one_rireduce (ID id) = (ID id)|
+fun one_rireduce (ID id) = (ID id)|
     one_rireduce (LAM(id,e)) = LAM(id, (one_rireduce e))|
     one_rireduce (APP(e1,e2)) = if (has_redex e2) then (APP(e1, (one_rireduce e2))) else
                                 if (is_redex (APP(e1,e2))) then (red (APP(e1,e2))) else
@@ -181,6 +181,7 @@ val t6 = (LAM("x",(LAM("y",(LAM("z",(APP(APP(vx,vz),(APP(vy,vz)))))))))); (* (la
 val t7 = (APP(APP(t6,t1),t1)); (* ((t6,t1)t1) *)
 val t8 = (LAM("z", (APP(vz,(APP(t1,vz)))))); (* (lambda-z.(z(t1,z))) *)
 val t9 = (APP(t8,t3)); (* (t8,t3) *)
+
 
 (*Note that printmreduce t7; gives:
 (((\x.(\y.(\z.((x z) (y z))))) (\x.x)) (\x.x))-->
