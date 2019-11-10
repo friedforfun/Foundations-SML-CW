@@ -38,5 +38,12 @@ fun creduce (CID id) =  [(CID id)] |
 			    in l3 @ l4 @ l6
 			    end);
 
+fun Printcredexlist [] =  print "" |
+	Printcredexlist (h::nil) = (printCOM h; print "\n") |
+	Printcredexlist (h::t)= (printCOM h; print "--> \n"; Printcredexlist t);
 
-fun	credex e = PrintCOMlist(ClrDup(creduce(e)));
+fun numCredex l = List.length (ClrDup(creduce(l))) -1 ;
+
+fun printcredexnum t = ClrDup(creduce(t));
+
+fun	credex e = (Printcredexlist(ClrDup(creduce(e))); print (Int.toString(numCredex(e))); print " steps \n");
