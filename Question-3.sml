@@ -63,3 +63,4 @@ val ct7 = CAPP(CAPP(ct6,ct1),ct1); (* ((t6,t1)t1) *)
 val ct8 = CAPP(CAPP(CS, CI), CI);
 val ct9 = CAPP(ct8,ct3); (* (t8,t3) *)
 
+val ct10 = CAPP((CAPP(CI, CAPP(CAPP(CI, CAPP(CK, cvx)), cvz))), (CAPP(CI, CAPP(CAPP(CI, CAPP(CK, cvx)), cvz))));
