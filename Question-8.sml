@@ -38,6 +38,16 @@ fun cmreduce (CID id) =  [(CID id)] |
 			    in l3 @ l4 @ l6
 			    end);
 
+fun cloreduce (CID id) =  [(CID id)] |
+	cloreduce (CI) = [(CI)] |
+	cloreduce (CK) = [(CK)] |
+	cloreduce (CS) = [(CS)] |    
+	cloreduce (CAPP(e1,e2)) = (let val l1 = if (is_credex (CAPP(e1,e2))) then  (cloreduce (one_credex (CAPP(e1,e2)))) else 
+				 if (has_credex e1) then (cloreduce (CAPP(one_credex e1, e2))) else 
+				 if (has_credex e2) then  (cloreduce (CAPP(e1, (one_credex e2)))) else []
+				 in [CAPP(e1,e2)]@l1
+			      end);
+
 fun Printcredexlist [] =  print "" |
 	Printcredexlist (h::nil) = (printCOM h; print "\n") |
 	Printcredexlist (h::t)= (printCOM h; print "--> \n"; Printcredexlist t);
