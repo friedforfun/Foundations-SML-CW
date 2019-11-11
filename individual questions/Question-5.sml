@@ -45,7 +45,7 @@ fun Utran (ID id) = (CID id) |
 
 fun Ttran (IID id) = (CID id) |
 	Ttran (ILAM(v,e)) = fFun(CID v, Ttran(e)) |
-	Ttran (IAPP(e1, e2)) = (CAPP(Ttran(e1), Ttran(e2))) ;
+	Ttran (IAPP(e1, e2)) = (CAPP(Ttran(e2), Ttran(e1))) ;
 
 
 
