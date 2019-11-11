@@ -1,0 +1,1516 @@
+\title{\bf Foundations1 assignment 2019\\Coursework 1\\}
+\author{Sam Fay-Hunt \texttt{sf52@hw.ac.uk}}
+\documentclass[11pt]{article} 
+
+%\documentclass{article}
+
+\usepackage{geometry}
+\geometry{verbose}
+
+%\usepackage{alltt}
+\usepackage{verbatimbox}
+\usepackage{url}
+\usepackage{latexsym}
+\usepackage{amssymb, amsmath}
+\usepackage{color}
+
+% for \includegraphics
+\usepackage{graphicx}
+
+
+
+
+\def\rrightarrow{\rightarrow \hspace{-.65em} \rightarrow}
+\newcommand{\la}{\lambda}
+\newcommand{\sep}{\mbox{$.$}}  
+\newcommand{\at}{\mbox{$\hspace{0.2em}$}}  
+\newcommand{\be}{\beta}
+\def\Rar{\Rightarrow}
+\def\LRar{\Leftrightarrow}
+\def\grval{\hspace{.4ex} \mid \hspace{-.5ex} \stackrel{\it val}{= \hspace{-.5ex} =} \hspace{.4ex}}
+\def\isval{\hspace{.4ex} \stackrel{\it  val}{= \hspace{-.5ex} =} \hspace{.4ex}}
+\newcommand{\ult}[2]{\mbox{$\lambda {#1} \sep {#2}$}}  % untyped lambda term
+\def\ttT{{\tt True}}
+\def\ttF{{\tt False}}
+\def\nnull{{\bf null}}
+\newcommand \cI {\mbox{I}''}
+\newcommand \cK {\mbox{K}''}
+\newcommand \mycS {\mbox{S}''}
+\def\hd{{\bf hd}}
+\def\tl{{\bf tl}}
+\def\mycons{{\bf cons}}
+\def\append{{\bf append}}
+\def\reverse{{\bf reverse}}
+\def\tc{{\bf cond }}
+\def\tT{{\bf true }}
+\def\tf{{\bf false }}
+\newcommand \cM {\cal M}
+\def\equal{{\bf H }}
+\def\mycons{{\bf cons}}
+\def\append{{\bf append}}
+\def\reverse{{\bf reverse}}
+\def\tc{{\bf cond }}
+\def\tT{{\bf true }}
+\def\tf{{\bf false }}
+\def\pair{{\bf pair}}
+\def\fst{{\bf fst}}
+\def\snd{{\bf snd}}
+\def\ntuple{\mbox{{\bf n-tuple}}}
+\def\nnull{{\bf null}}
+\def\hd{{\bf hd}}
+\def\tl{{\bf tl}}
+\def\mycons{{\bf cons}}
+\def\append{{\bf append}}
+\def\reverse{{\bf reverse}}
+\def\zero{{\bf 0}}
+\def\one{{\bf 1}}
+\def\two{{\bf 2}}
+\def\three{{\bf 3}}
+\def\six{{\bf 6}}
+
+\def\myn{{\bf n}}
+\def\mym{{\bf m}}
+\def\mynn{{\bf n+1}}
+\def\mynm{{\bf n+m}}
+\def\myntm{{\bf nxm}}
+\def\succ{{\bf succ}}
+\def\add{{\bf add}}
+\def\iszero{{\bf iszero}}
+\def\times{{\bf times}}
+\def\fact{{\bf fact}}
+\def\factfn{{\bf factfn}}
+\def\pre{{\bf pre}}
+
+
+
+
+
+
+
+
+
+\begin{document}
+\date{}
+
+\maketitle
+
+
+Throughout the assignment, assume the terms and definitions given in the DATA SHEET.
+
+
+
+\begin{enumerate}
+	  
+	
+	\item
+	      Just like I defined translation functions  $T:\cM'\mapsto \cM''$ and  $\omega: \cM\mapsto$ $\Lambda$, give translation functions from
+	      $U:\cM\mapsto \cM''$ and  $V:\cM\mapsto\cM'$ and  $\omega':\cM'\mapsto$ $\Lambda'$.   Your translation functions need to be complete with all subfunctions and needed information (just like $T$ and $\omega$ were complete with all needed information).   Submit all these functions here.
+	      \hfill{(1)} % sets marks in () right justified
+	      \color{red}
+	      \begin{itemize}
+	      	\item
+	      	      $U:{\cal M} \mapsto {\cal M}''$:\\
+	      	      $U(v) = v      \hspace{0.5in} \: \: U(\lambda v. P) =f(v, U(P))  \: \: \hspace{0.5in}  U(PQ) = (U(P)U(Q))$\\
+	      	      check the function $T$ in the appendix.
+	      	\item
+	      	      $V: {\cal M} \mapsto {\cal M}'$:\\
+	      	      $V(v) = v \hspace{0.5in} \: V(\lambda v.A) = [v]V(A) \hspace{0.5in} \: V(AB) = \langle V(B)\rangle V(A)$.
+	      	\item
+	      	      For $[x_1,\cdots, x_n]$ a list (not a set) of variables, 
+	      	      we define $\omega'_{[x_1,\cdots, x_n]}: \cM' \mapsto$ $\Lambda'$ inductively by:\\
+	      	      $\omega'_{[x_1,\cdots, x_n]}(v_i) = \min\{j:v_i \equiv x_j\}$\\
+	      	      $\omega'_{[x_1,\cdots, x_n]}(\langle B \rangle A) = \langle\omega'_{[x_1,\cdots, x_n]}(B)\rangle \omega'_{[x_1,\cdots, x_n]}(A)$\\
+	      	      $ \omega'_{[x_1,\cdots, x_n]}([x]A)=[]\omega'_{[x_1,\cdots, x_n]}(A)$
+	      	      
+	      	      We define $\omega': {\cal M}' \mapsto \Lambda'$ by:
+	      	      $\omega'(A) = \omega'_{[v_1,\cdots, v_n]}(A)$ where 
+	      	      $FV(A) \subseteq \{v_1,\cdots,v_n\}$.\\
+	      	      So for example, if our variables are ordered as $x,y,z,x',y',z', \cdots$ then\\ $\omega'([x][y][x']\langle x'\rangle \langle z \rangle x)
+	      	      = \omega'_{[x,y,z]}([x][y][x']\langle x'\rangle \langle z \rangle x) = []\omega_{[x,x,y,z]}([y][x']\langle x'\rangle \langle z \rangle x) = [][]\omega_{[y,x,x,y,z]}([x']\langle x'\rangle \langle z \rangle x) = [][][]\omega_{[x',y,x,x,y,z]}(\langle x'\rangle \langle z \rangle x) = [][][] \langle 1\rangle \langle 6 \rangle 3$.
+	      	      
+	      	     
+	      	      
+	      \end{itemize}
+	      \color{black}
+	\item
+	      For each of the SML terms vx, vy, vz, t1, $\cdots$ t9 in \url{http://www.macs.hw.ac.uk/~fairouz/foundations-2019/slides/data-files.sml}, let the overlined term represent the corresponding term in $\cM$.  I.e., $\overline{\mbox{vx}} = x$, $\overline{\mbox{vy}} = y$, $\overline{\mbox{vz}} = z$, $\overline{\mbox{t1}} = \lambda x.x$, $\overline{\mbox{t2}}
+	      = \lambda y.x$, $\cdots$.\\
+	      For each of $\overline{\mbox{vx}}$, $\overline{\mbox{vy}}$, $\overline{\mbox{vz}}$, $\overline{\mbox{t1}}$,
+	      $\overline{\mbox{t2}}$, $\cdots \overline{\mbox{t9}}$ in $\cM$, translate it into the corresponding terms of $\cM'$, $\cM''$, $\Lambda$ and  $\Lambda'$ using the translation functions $V$, $U$, $\omega$ and $\omega'$.  \\
+	      Your output should be tidy as follows:
+	      
+	      \begin{tabular}{|l|l|l|l|l|}
+	      	\hline
+	      	              & $V$    & $U$   & $\omega$    & $\omega'$ \\
+	      	\hline
+	      	$\lambda x.x$ & $[x]x$ & $I''$ & $\lambda 1$ & $[\:]1$   \\
+	      	\hline
+	      \end{tabular}
+	            
+	      \hfill{(1)} % sets marks in () right justified
+	      
+	      \color{red}
+	      \begin{tabular}{|l|l|l|}
+	      	\hline
+	      	      &                               & $V$                                           \\
+	      	\hline
+	      	vx    & $x$                           & $x$                                           \\
+	      	\hline
+	      	vy    & $y$                           & $y$                                           \\
+	      	\hline
+	      	vz    & $z$                           & $z$                                           \\
+	      	\hline
+	      	$t_1$ & $\lambda x.x$                 & $[x]x$                                        \\
+	      	\hline
+	      	$t_2$ & $\lambda y.x$                 & $[y]x$                                        \\
+	      	\hline
+	      	$t_3$ & $(\lambda x.x)(\lambda y.x)z$ & $\langle z \rangle \langle [y]x \rangle [x]x$ \\
+	      	\hline
+	      	$t_4$ & $(\lambda x.x)z$              & $\langle z\rangle [x]x$                       \\
+	      	\hline
+	      	$t_5$ & $(\lambda x.x)(\lambda y.x) z ((\lambda x.x)(\lambda y.x)z)$          & $\langle \langle z \rangle \langle [y]x \rangle [x]x \rangle \langle z \rangle \langle [y]x \rangle [x]x$\\
+	      	\hline
+	      	$t_6$ & $\lambda xyz.xz(yz)$                             &  $[x][y][z]\langle \langle z \rangle y \rangle \langle z \rangle x$                                             \\
+	      	\hline
+	      	$t_7$ & $(\lambda xyz.xz(yz))(\lambda x.x)(\lambda x.x)$                             & $ \langle [x]x \rangle \langle [x]x \rangle [x][y][z]\langle \langle z \rangle y \rangle \langle z \rangle x $                                             \\
+	      	\hline
+	      	$t_8$ & $\lambda z. z((\lambda x.x)z) $                             & $[z] \langle \langle z \rangle [x]x \rangle z$                                             \\
+	      	\hline
+	      	$t_9$ & $(\lambda z. z((\lambda x.x)z))((\lambda x.x)(\lambda y.x)z) $                             & $\langle \langle z \rangle \langle [y]x \rangle [x]x\rangle [z] \langle \langle z \rangle [x]x \rangle z$                                             \\
+	      	\hline
+	      \end{tabular}
+	            
+	      \begin{tabular}{|l|l|l|l|}
+	      	\hline
+	      	         & $U$      & $\omega$    & $\omega'$ \\
+	      	\hline
+	      	vx       & $x$      & 1           & 1         \\
+	      	\hline
+	      	vy       & $y$      & 2           & 2         \\
+	      	\hline
+	      	vz       & $z$     & 3           & 3         \\
+	      	\hline
+	      	$t_1$    & $I''$    & $\lambda 1$ & $[\:]1$   \\
+	      	\hline
+	      	$t_2$    & $K''x$   & $\lambda 2$ & $[\:]2$         \\
+	      	\hline
+	      	$t_3$    & $I'' (K''x) z$   & $(\lambda 1)(\lambda 2)3$    & $\langle 3 \rangle \langle [\:]2 \rangle\:]1 $         \\
+	      	\hline
+	      	$t_4$    & $I''z$        & $(\lambda 1) 3$           & $\langle 3 \rangle [\:]1$         \\
+	      	\hline
+	      	$t_5$
+	      	         & $I'' (K''x) z(I'' (K''x) z)$        & $(\lambda 1)(\lambda 2)3((\lambda 1)(\lambda 2)3)$           & $\langle \langle 3\rangle \langle [\:]2 \rangle [\:]1 \rangle\langle 3\rangle \langle [\:]2 \rangle [\:]1$         \\
+	      	\hline
+	      	$t_6$    & $S''$        & $\lambda \lambda \lambda 31(21)$           & $[][][]\langle \langle 1 \rangle 2 \rangle \langle 1 \rangle 3$         \\
+	      	\hline
+	      	$t_7$    & $S'' I'' I''$        & $(\lambda \lambda \lambda 31(21))(\lambda 1)\lambda 1$           & $\langle []1 \rangle \langle []1 \rangle [][][]\langle \langle 1 \rangle 2 \rangle \langle 1 \rangle 3$         \\
+	      	\hline
+	      	$t_8$    & $S'' I'' I''$        & $\lambda 1 ((\lambda 1)1)$           & $[]\langle \langle 1 \rangle []1 \rangle 1$         \\
+	      	\hline
+	      	$t_9$    & $S'' I'' I''(I'' (K''x) z)$        & $(\lambda 1 ((\lambda 1)1))((\lambda 1)(\lambda 2)3)$           &$\langle \langle 3 \rangle \langle [\:]2 \rangle\:]1 \rangle []\langle \langle 1 \rangle []1 \rangle 1$         \\
+	      	\hline
+	      \end{tabular}
+	            
+	      \color{black}
+	      
+	\item
+	      Just like I introduced SML terms vx, vy, vz, t1, t2, $\cdots$ t9
+	      which implement terms in  $\cM$, please implement the corresponding terms each of the other sets $\cM'$, $\Lambda$, $\Lambda'$, $\cM''$.  Your output must be like my output in
+	      \url{http://www.macs.hw.ac.uk/~fairouz/foundations-2019/slides/data-files.sml},
+	      for the implementation of these terms of $\cM$. I.e., your output for each set must be similar to the following:
+	      \hfill{(1)} % sets marks in () right justified
+	      
+	      
+	      \noindent
+	      The implementation of terms in $\cM$ is as follows:
+	      \begin{verbatim}
+val vx = (ID "x");
+val vy = (ID "y");
+val vz = (ID "z");
+val t1 = (LAM("x",vx));
+val t2 = (LAM("y",vx));
+val t3 = (APP(APP(t1,t2),vz));
+val t4 = (APP(t1,vz));
+val t5 = (APP(t3,t3));
+val t6 = (LAM("x",(LAM("y",(LAM("z",
+                       (APP(APP(vx,vz),(APP(vy,vz))))))))));
+val t7 = (APP(APP(t6,t1),t1));
+val t8 = (LAM("z", (APP(vz,(APP(t1,vz))))));
+val t9 = (APP(t8,t3));
+	      \end{verbatim}
+	      \color{red}
+	      
+	      \begin{itemize}
+	      	\item
+	      	      \begin{verbatim}
+val Ivx = (IID "x");
+val Ivy = (IID "y");
+val Ivz = (IID "z");
+val It1 = (ILAM("x",Ivx));
+val It2 = (ILAM("y",ivx));
+val it3 = (IAPP(ivz, IAPP(it2,it1)));
+val it4 = (IAPP(ivz,it1));
+val it5 = (IAPP(it3,it3));
+val it6 = (ILAM("x",(ILAM("y",(ILAM("z",
+                      (IAPP (IAPP(ivz, ivy), (IAPP(ivz, ivx))))))))));
+val it7 = (IAPP(it1, IAPP(it1,it6))); 
+val it8 = (ILAM("z", (IAPP(IAPP(ivz,it1), ivz))));
+val it9 = (IAPP(it3,it8)); 
+	      	      \end{verbatim}
+	      	      
+	      	\item
+	      	      \begin{verbatim}
+val Bvx = (BID 1);
+val Bvy = (BID 2);
+val Bvz = (BID 3);
+val Bt1 = (BLAM(Bvx));
+val bt2 = (BLAM(bvy));
+val bt3 = (BAPP(BAPP(bt1,bt2),bvz));
+val bt4 = (BAPP(bt1,bvz)); 
+val bt5 = (BAPP(bt3,bt3)); 
+val bt6 = (BLAM(BLAM(BLAM(BAPP(BAPP(BID 3,BID 1),(BAPP(BID 2,BID 1))))))); 
+val bt7 = (BAPP(BAPP(bt6,bt1),bt1));
+val bt8 = (BLAM(BAPP(BID 1,(BAPP(bt1,BID 1)))));
+val bt9 = (BAPP(bt8,bt3));
+	      	      \end{verbatim}
+	      	\item
+	      	      \begin{verbatim}
+val ibvx = (IBID 1);
+val ibvy = (IBID 2);
+val ibvz = (IBID 3);
+val ibt1 = (IBLAM(ibvx));
+val ibt2 = (IBLAM(ibvy));
+val ibt3 = (IBAPP(ibvz, IBAPP(ibt2,ibt1)));
+val ibt4 = (IBAPP(ibvz,ibt1)); 
+val ibt5 = (IBAPP(ibt3,ibt3)); 
+val ibt6 = (IBLAM(IBLAM(IBLAM(IBAPP(IBAPP(IBID 1, IBID 2),
+                                IBAPP(IBID 1, IBID 3))))));
+val ibt7 = (IBAPP(ibt1, IBAPP(ibt1, ibt6)));
+val ibt8 = (IBLAM(IBAPP((IBAPP(IBID 1, ibt1)), IBID 1)));
+val ibt9 = (IBAPP(ibt3,ibt8)); 
+	      	      \end{verbatim}
+	      	\item
+	      	      \begin{verbatim}
+val cvx = (CID "x");
+val cvy = (CID "y");
+val cvz = (CID "z");
+val ct1 = CI; 
+val ct2 = (CAPP(CK, cvx));
+val ct3 = (CAPP(CAPP(ct1,ct2),cvz));
+val ct4 = (CAPP(ct1,cvz));
+val ct5 = (CAPP(ct3,ct3));
+val ct6 = CS;
+val ct7 = CAPP(CAPP(ct6,ct1),ct1);
+val ct8 = CAPP(CAPP(CS, CI), CI);
+val ct9 = CAPP(ct8,ct3);
+	      	      \end{verbatim}
+	      \end{itemize}
+	      \color{black}
+	\item
+	      For each of $\cM'$, $\Lambda$, $\Lambda'$, $\cM''$, implement a printing function that prints its elements nicely and you need to test it on every one of the corresponding terms  vx, vy, vz, t1, t2, $\cdots$ t9.  Your output for each such set must be similar to the one below \hfill{(1)} % sets marks in () right justified
+	        
+	      
+	      
+	      \noindent
+	      \begin{verbatim}
+(*Prints a term in classical lambda calculus*)
+fun printLEXP (ID v) =
+    print v
+  | printLEXP (LAM (v,e)) =
+    (print "(\\";
+     print v;
+     print ".";
+     printLEXP e;
+     print ")")
+  | printLEXP (APP(e1,e2)) =
+    (print "(";
+     printLEXP e1;
+     print " ";
+     printLEXP e2;
+     print ")");
+	      \end{verbatim}  
+	      Printing these  $\cM$ terms yields:
+	      \begin{verbatim}
+-printLEXP vx;
+xval it = () : unit
+
+-printLEXP vy;
+yval it = () : unit
+
+-printLEXP vz;
+zval it = () : unit
+
+-printLEXP t1;
+(\x.x)val it = () : unit
+
+-printLEXP t2;
+(\y.x)val it = () : unit
+
+-printLEXP t3;
+(((\x.x) (\y.x)) z)val it = () : unit
+
+-printLEXP t4;
+((\x.x) z)val it = () : unit
+
+-printLEXP t5;
+((((\x.x) (\y.x)) z) (((\x.x) (\y.x)) z))val it = () : unit
+
+-printLEXP t6;
+(\x.(\y.(\z.((x z) (y z)))))val it = () : unit
+
+-printLEXP t8;
+(\z.(z ((\x.x) z)))val it = () : unit
+
+-printLEXP t9;
+((\z.(z ((\x.x) z))) (((\x.x) (\y.x)) z))val it = () : unit
+
+	      \end{verbatim}
+	      \color{red}
+	      \begin{itemize}
+	      	\item
+	      	      \begin{verbatim}
+(*Prints a term in item lambda calculus*)
+fun printILEXP (IID v) = (print v; print " ") |
+    printILEXP (ILAM (v,e)) = (print "[";
+                             print v; print "]";      printILEXP e) |
+    printILEXP (IAPP (e1,e2)) = (print "<"; printILEXP e1;
+                                print ">"; printILEXP e2);
+
+	      	      \end{verbatim}  
+	      	      Printing these  $\cM$' terms yields:
+	      	      \begin{verbatim}
+- printILEXP ivx;
+x val it = () : unit
+
+- printILEXP ivy;
+y val it = () : unit
+
+- printILEXP ivz;
+z val it = () : unit
+
+- printILEXP it1;
+[x]x val it = () : unit
+
+- printILEXP it2;
+[y]x val it = () : unit
+
+- printILEXP it3;
+<z ><[y]x >[x]x val it = () : unit
+
+- printILEXP it4;
+<z >[x]x val it = () : unit
+
+- printILEXP it5;
+<<z ><[y]x >[x]x ><z ><[y]x >[x]x val it = () : unit
+
+- printILEXP it6;
+[x][y][z]<<z >y ><z >x val it = () : unit
+
+- printILEXP it7;
+<[x]x ><[x]x >[x][y][z]<<z >y ><z >x val it = () : unit
+
+- printILEXP it8;
+[z]<<z >[x]x >z val it = () : unit
+
+- printILEXP it9;
+<<z ><[y]x >[x]x >[z]<<z >[x]x >z val it = () : unit
+
+
+	      	      \end{verbatim}
+	      	\item
+	      	      
+	      	      \begin{verbatim}
+(*Prints a term in classical lambda calculus with de Bruijn indices*)
+fun printBLEXP (BID v) = print (Int.toString v) |
+    printBLEXP (BLAM (e)) = (print "(\\"; printBLEXP(e); print ")") |
+    printBLEXP (BAPP (e1,e2)) = (print "("; printBLEXP (e1);
+                                print " "; printBLEXP (e2); print ")");
+
+	      	      \end{verbatim}  
+	      	      Printing these  $\Lambda$ terms yields:
+	      	      \begin{verbatim}
+- printBLEXP bvx;
+1val it = () : unit
+
+- printBLEXP bvy;
+2val it = () : unit
+
+- printBLEXP bvz;
+3val it = () : unit
+
+- printBLEXP bt1;
+(\1)val it = () : unit
+
+- printBLEXP bt2;
+(\2)val it = () : unit
+
+- printBLEXP bt3;
+(((\1) (\2)) 3)val it = () : unit
+
+- printBLEXP bt4;
+((\1) 3)val it = () : unit
+
+- printBLEXP bt5;
+((((\1) (\2)) 3) (((\1) (\2)) 3))val it = () : unit
+
+- printBLEXP bt6;
+(\(\(\((3 1) (2 1)))))val it = () : unit
+
+- printBLEXP bt7;
+(((\(\(\((3 1) (2 1))))) (\1)) (\1))val it = () : unit
+
+- printBLEXP bt8;
+(\(1 ((\1) 1)))val it = () : unit
+
+- printBLEXP bt9;
+((\(1 ((\1) 1))) (((\1) (\2)) 3))val it = () : unit
+
+	      	      \end{verbatim}
+	      	      
+	      	      
+	      	\item
+	      	      \begin{verbatim}
+(*Prints a term in item lambda calculus with de Bruijn indices*)
+fun printIBLEXP (IBID v) = print (Int.toString v) |
+    printIBLEXP (IBLAM (e)) = (print "[]"; printIBLEXP(e)) |
+    printIBLEXP (IBAPP (e1, e2)) = (print "<"; printIBLEXP(e1); print ">";
+                                     printIBLEXP(e2) );
+
+	      	      \end{verbatim}
+	      	      Printing these $\Lambda'$ terms yield:
+	      	      \begin{verbatim}
+
+- printIBLEXP ibvx;
+1val it = () : unit
+
+- printIBLEXP ibvy;
+2val it = () : unit
+
+- printIBLEXP ibvz;
+3val it = () : unit
+
+- printIBLEXP ibt1;
+[]1val it = () : unit
+
+- printIBLEXP ibt2;
+[]2val it = () : unit
+
+- printIBLEXP ibt3;
+<3><[]2>[]1val it = () : unit
+
+- printIBLEXP ibt4;
+<3>[]1val it = () : unit
+
+- printIBLEXP ibt5;
+<<3><[]2>[]1><3><[]2>[]1val it = () : unit
+
+
+- printIBLEXP ibt6;
+[][][]<<1>2><1>3val it = () : unit
+
+- printIBLEXP ibt7;
+<[]1><[]1>[][][]<<1>2><1>3val it = () : unit
+
+- printIBLEXP ibt8;
+[]<<1>[]1>1val it = () : unit
+
+- printIBLEXP ibt9;
+<<3><[]2>[]1>[]<<1>[]1>1val it = () : unit
+
+	      	      \end{verbatim}
+	      	      
+	      	\item
+	      	      \begin{verbatim}
+fun printCOM (CID v) = print v |
+    printCOM (CI) = print "I''" |
+    printCOM (CK) = print "K''" |
+    printCOM (CS) = print "S''" |
+    printCOM (CAPP (e1, e2)) = (print "("; printCOM (e1); print " ";
+                                    printCOM(e2); print ")");
+
+
+	      	      \end{verbatim}
+	      	      
+	      	      Printing these ${\cal M}''$ terms yields:
+	      	      \begin{verbatim}
+- printCOM cvx;
+xval it = () : unit
+
+- printCOM cvy;
+yval it = () : unit
+
+- printCOM cvz;
+zval it = () : unit
+
+- printCOM ct1;
+I''val it = () : unit
+
+- printCOM ct2;
+(K'' x)val it = () : unit
+
+- printCOM ct3;
+((I'' (K'' x)) z)val it = () : unit
+
+- printCOM ct4;
+(I'' z)val it = () : unit
+
+- printCOM ct5;
+(((I'' (K'' x)) z) ((I'' (K'' x)) z))val it = () : unit
+
+- printCOM ct6;
+S''val it = () : unit
+
+- printCOM ct7;
+((S'' I'') I'')val it = () : unit
+
+- printCOM ct8;
+((S'' I'') I'')val it = () : unit
+
+- printCOM ct9;
+(((S'' I'') I'') ((I'' (K'' x)) z))val it = () : unit
+
+	      	      \end{verbatim}
+	      \end{itemize}
+	      
+	      \color{black}
+	      
+	\item
+	      Implement in SML the translation functions $T$, $U$ and $V$ and give these implemented functions here.
+	      \hfill{(2)} % sets marks in () right justified
+	      
+	      
+	      \color{red}
+	      \begin{itemize}
+	      	\item
+	      	      $V:{\cal M}\mapsto {\cal M}'$ is implemented as follows:
+	      	      \begin{verbatim}
+fun Itran (ID id) = (IID id) |
+    Itran (LAM(v,e)) = (ILAM(v, Itran(e))) |
+    Itran (APP(e1,e2)) = IAPP(Itran(e2), Itran(e1));
+	      	      \end{verbatim}
+	      	\item
+	      	      $U:{\cal M}\mapsto {\cal M}''$ is implemented as follows:
+	      	      \begin{verbatim}
+fun Cfree id1 (CID id2) = if (id1 = CID id2) then true else false |
+    Cfree id (CAPP(e1, e2)) = (Cfree id e1) orelse (Cfree id e2) |
+    Cfree id CI = false |
+    Cfree id CK = false |
+    Cfree id CS = false;
+
+	
+fun fFun (v1, v2) = if (v1 = v2) then (CI) 
+                    else if not(Cfree v1 v2) then (CAPP(CK, v2))
+                    else if not(Cfree v1 (lhs(v2))) andalso 
+                                     (v1 = (rhs(v2))) then lhs(v2)
+                    else (CAPP(CAPP(CS, 
+                               fFun(v1, (lhs(v2)))), fFun(v1, (rhs(v2)))));
+                               
+fun Utran (ID id) = (CID id) |
+    Utran (LAM(v,e)) = fFun(CID v, Utran(e)) |
+    Utran (APP(e1,e2)) = (CAPP(Utran(e1), Utran(e2)));
+	      	      \end{verbatim}
+	      	\item
+	      	      $T:{\cal M}'\mapsto {\cal M}''$ is implemented as follows (we use all the auxilliary functions defined for toC above):
+	      	      \begin{verbatim}
+(*translates from item notation to combinators*)
+fun Ttran (IID id) = (CID id) |
+    Ttran (ILAM(v,e)) = fFun(CID v, Ttran(e)) |
+    Ttran (IAPP(e1, e2)) = (CAPP(Ttran(e2), Ttran(e1))) ;
+	      	      \end{verbatim}
+	      \end{itemize}
+	      \color{black}
+	\item
+	      Test these functions on all possible translations between these various sets for all the given terms vx, vy, vz, t1, $\cdots$ t9 and give your output clearly.
+	      
+	      For example, my itran translates from $\cM$ to $\cM'$ and my printIEXP prints expressions in $\cM'$.  Hence,  
+	      \begin{verbatim}
+- printIEXP (itran t5);
+<<z><[y]x>[x]x><z><[y]x>[x]xval it = () : unit
+	      \end{verbatim}
+	      You need to show how all your terms are translated in all these sets and how you print them.
+	      \hfill{(2)} % sets marks in () right justified
+	      
+	      \color{red}
+	      \begin{itemize}
+	      	\item
+	      	      \begin{verbatim}
+- printILEXP (Itran vx);
+x val it = () : unit
+
+- printILEXP (Itran vy);
+y val it = () : unit
+
+- printILEXP (Itran vz);
+z val it = () : unit
+
+- printILEXP (Itran t1);
+[x]x val it = () : unit
+
+- printILEXP (Itran t2);
+[y]x val it = () : unit
+
+- printILEXP (Itran t3);
+<z ><[y]x >[x]x val it = () : unit
+
+- printILEXP (Itran t4);
+<z >[x]x val it = () : unit
+
+- printILEXP (Itran t5);
+<<z ><[y]x >[x]x ><z ><[y]x >[x]x val it = () : unit
+
+- printILEXP (Itran t6);
+[x][y][z]<<z >y ><z >x val it = () : unit
+
+- printILEXP (Itran t7);
+<[x]x ><[x]x >[x][y][z]<<z >y ><z >x val it = () : unit
+
+- printILEXP (Itran t8);
+[z]<<z >[x]x >z val it = () : unit
+
+- printILEXP (Itran t9);
+<<z ><[y]x >[x]x >[z]<<z >[x]x >z val it = () : unit
+
+	      	      \end{verbatim}
+	      	\item
+	      	      \begin{verbatim}
+- printCOM (Utran vx);
+xval it = () : unit
+
+- printCOM (Utran vy);
+yval it = () : unit
+
+- printCOM (Utran vz);
+zval it = () : unit
+
+- printCOM (Utran t1);
+I''val it = () : unit
+
+- printCOM (Utran t2);
+(K'' x)val it = () : unit
+
+- printCOM (Utran t3);
+((I'' (K'' x)) z)val it = () : unit
+
+- printCOM (Utran t4);
+(I'' z)val it = () : unit
+
+- printCOM (Utran t5);
+(((I'' (K'' x)) z) ((I'' (K'' x)) z))val it = () : unit
+
+- printCOM (Utran t6);
+S''val it = () : unit
+
+- printCOM (Utran t7);
+((S'' I'') I'')val it = () : unit
+
+- printCOM (Utran t8);
+((S'' I'') I'')val it = () : unit
+
+- printCOM (Utran t9);
+(((S'' I'') I'') ((I'' (K'' x)) z))val it = () : unit
+
+	      	      \end{verbatim}
+	      	\item
+	      	      \begin{verbatim}
+- printCOM(Ttran(ivx));
+xval it = () : unit
+
+- printCOM(Ttran(ivy));
+yval it = () : unit
+
+- printCOM(Ttran(ivz));
+zval it = () : unit
+
+- printCOM(Ttran(it1));
+I''val it = () : unit
+
+- printCOM(Ttran(it2));
+(K'' x)val it = () : unit
+
+- printCOM(Ttran(it3));
+((I'' (K'' x)) z)val it = () : unit
+
+- printCOM(Ttran(it4));
+(I'' z)val it = () : unit
+
+- printCOM(Ttran(it5));
+(((I'' (K'' x)) z) ((I'' (K'' x)) z))val it = () : unit
+
+- printCOM(Ttran(it6));
+S''val it = () : unit
+
+- printCOM(Ttran(it7));
+((S'' I'') I'')val it = () : unit
+
+- printCOM(Ttran(it8));
+((S'' I'') I'')val it = () : unit
+
+- printCOM(Ttran(it9));
+(((S'' I'') I'') ((I'' (K'' x)) z))val it = () : unit
+
+	      	      \end{verbatim}
+	      \end{itemize}
+	      \color{black}
+	\item
+	      Define the subterms in $\cM''$ and implement this function in SML.
+	      You should give below the formal definition of $subterm''$, its implementation   in SML and you need to test on finding the subterms for all combinator terms that correspond to  vx, vy, vz, t1, $\cdots$ t9.  For example, if ct1 and ct2  are the terms that correspond to t1 and t2 then
+	      \begin{verbatim}
+- subterm2 ct1;
+val it = [CI] : COM list
+- subterm2 ct2;
+val it = [CAPP (CK,CID "x"),CK,CID "x"] : COM list
+	      \end{verbatim}
+	      \hfill{(2)} % sets marks in () right justified
+	      
+	      \color{red}
+	      \begin{itemize}
+	      	\item
+	      	      $subterms(v) = \{v\}$\\
+	      	      $subterms(I'') = \{I''\}$\\
+	      	      $subterms(K'') = \{K''\}$\\
+	      	      $subterms(S'') = \{S''\}$\\
+	      	      $subterms(AB) = subterms(A) \cup subterms(B)$\\
+	      	     
+	      	\item
+	      	      \begin{verbatim}
+fun	subterms (CID id) = [(CID id)]|
+	subterms (CI) = [(CI)] |
+	subterms (CK) = [(CK)] |
+	subterms (CS) = [(CS)] |
+	subterms (CAPP(e1, e2)) = [CAPP(e1, e2)] @ (subterms e1) @ (subterms e2);
+	
+fun ClrDup [] = [] |
+    ClrDup (h::t) = h :: ClrDup (List.filter (fn x => x <> h) t) ;
+
+fun setterms t = ClrDup(subterms(t));
+
+fun PrintCOMlist [] =  print "" |
+    PrintCOMlist (h::t)= (printCOM h; print "\n"; PrintCOMlist t);
+
+fun printlistcomb t = PrintCOMlist(setterms(t));
+	      	      \end{verbatim}
+	      	\item
+	      	      \begin{verbatim}
+(* subterm list with duplication *)
+- subterms ct1;
+val it = [CI] : COM list
+
+- subterms ct2;
+val it = [CAPP (CK,CID "x"),CK,CID "x"] : COM list
+
+- subterms ct3;
+val it =
+  [CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),CAPP (CI,CAPP (CK,CID "x")),CI,
+   CAPP (CK,CID "x"),CK,CID "x",CID "z"] : COM list
+   
+- subterms ct4;
+val it = [CAPP (CI,CID "z"),CI,CID "z"] : COM list
+
+- subterms ct5;
+val it =
+  [CAPP
+     (CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),
+      CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z")),
+   CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),CAPP (CI,CAPP (CK,CID "x")),CI,
+   CAPP (CK,CID "x"),CK,CID "x",CID "z",
+   CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),CAPP (CI,CAPP (CK,CID "x")),CI,
+   CAPP (CK,CID "x"),...] : COM list
+   
+- subterms ct6;
+val it = [CS] : COM list
+
+- subterms ct7;
+val it = [CAPP (CAPP (CS,CI),CI),CAPP (CS,CI),CS,CI,CI] : COM list
+
+- subterms ct8;
+val it = [CAPP (CAPP (CS,CI),CI),CAPP (CS,CI),CS,CI,CI] : COM list
+
+- subterms ct9;
+val it =
+  [CAPP (CAPP (CAPP (CS,CI),CI),CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z")),
+   CAPP (CAPP (CS,CI),CI),CAPP (CS,CI),CS,CI,CI,
+   CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),CAPP (CI,CAPP (CK,CID "x")),CI,
+   CAPP (CK,CID "x"),CK,CID "x",...] : COM list
+   
+   \end{verbatim}
+   \item
+   \begin{verbatim}
+(* subterm list without duplication (setterms) *)
+- setterms ct1;
+val it = [CI] : COM list
+
+- setterms ct2;
+val it = [CAPP (CK,CID "x"),CK,CID "x"] : COM list
+
+- setterms ct3;
+val it =
+  [CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),CAPP (CI,CAPP (CK,CID "x")),CI,
+   CAPP (CK,CID "x"),CK,CID "x",CID "z"] : COM list
+   
+- setterms ct4;
+val it = [CAPP (CI,CID "z"),CI,CID "z"] : COM list
+
+- setterms ct5;
+val it =
+  [CAPP
+     (CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),
+      CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z")),
+   CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),CAPP (CI,CAPP (CK,CID "x")),CI,
+   CAPP (CK,CID "x"),CK,CID "x",CID "z"] : COM list
+   
+- setterms ct6;
+val it = [CS] : COM list
+
+- setterms ct7;
+val it = [CAPP (CAPP (CS,CI),CI),CAPP (CS,CI),CS,CI] : COM list
+
+- setterms ct8;
+val it = [CAPP (CAPP (CS,CI),CI),CAPP (CS,CI),CS,CI] : COM list
+
+- setterms ct9;
+val it =
+  [CAPP (CAPP (CAPP (CS,CI),CI),CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z")),
+   CAPP (CAPP (CS,CI),CI),CAPP (CS,CI),CS,CI,
+   CAPP (CAPP (CI,CAPP (CK,CID "x")),CID "z"),CAPP (CI,CAPP (CK,CID "x")),
+   CAPP (CK,CID "x"),CK,CID "x",CID "z"] : COM list
+
+	      	      \end{verbatim}
+	      	      \item
+	      	      \large Printing the list nicely.
+	      	      
+	      	      \begin{verbatim}
+- printlistcomb(ct1);
+I''
+val it = () : unit
+
+- printlistcomb(ct2);
+(K'' x)
+K''
+x
+val it = () : unit
+
+- printlistcomb(ct3);
+((I'' (K'' x)) z)
+(I'' (K'' x))
+I''
+(K'' x)
+K''
+x
+z
+val it = () : unit
+
+- printlistcomb(ct4);
+(I'' z)
+I''
+z
+val it = () : unit
+
+- printlistcomb(ct5);
+(((I'' (K'' x)) z) ((I'' (K'' x)) z))
+((I'' (K'' x)) z)
+(I'' (K'' x))
+I''
+(K'' x)
+K''
+x
+z
+val it = () : unit
+
+- printlistcomb(ct6);
+S''
+val it = () : unit
+
+- printlistcomb(ct7);
+((S'' I'') I'')
+(S'' I'')
+S''
+I''
+val it = () : unit
+
+- printlistcomb(ct8);
+((S'' I'') I'')
+(S'' I'')
+S''
+I''
+val it = () : unit
+
+- printlistcomb(ct9);
+(((S'' I'') I'') ((I'' (K'' x)) z))
+((S'' I'') I'')
+(S'' I'')
+S''
+I''
+((I'' (K'' x)) z)
+(I'' (K'' x))
+(K'' x)
+K''
+x
+z
+val it = () : unit
+	      	      \end{verbatim}
+	      \end{itemize}
+	      \color{black}
+	\item
+	      Implement the combinatory reduction rules $=_c$ given in the data sheets and use your implementation to reduce
+	      all combinator terms that correspond to  vx, vy, vz, t1, $\cdots$ t9 showing all reduction steps.  
+	      For example,
+	      \begin{verbatim}
+-creduce ct3;
+ct3 =
+I(Kx)z -->
+Kxz -->
+x
+-creduce ct5;
+ct5 =
+I(Kx)z(I(Kx)z)-->
+K x z(I(Kx)z)-->
+x(I(Kx)z)-->
+x(Kxz) -->
+xx
+	      \end{verbatim}
+	      \hfill{(2)} % sets marks in () right justified
+	      
+	      \color{red}
+	      The functions below are all adapted versions of those in data-files.sml.
+	      
+	      \begin{verbatim}
+(*Finds a c-redex*)
+fun is_credex (CAPP(CI, _)) = true |
+    is_credex (CAPP(CAPP(CK, _), _)) = true |
+    is_credex (CAPP(CAPP(CAPP(CS, _), _), _)) = true |
+    is_credex _ = false;
+
+fun has_credex (CID id) = false |
+    has_credex (CI) = false |
+    has_credex (CS) = false |
+    has_credex (CK) = false |
+    has_credex (CAPP(e1, e2)) = if (is_credex (CAPP(e1,e2))) then true 
+                                else ((has_credex e1) orelse (has_credex e2));
+
+fun one_credex (CAPP(CI, e)) = e |
+    one_credex (CAPP(CAPP(CK, e1), e2)) = e1 |
+    one_credex (CAPP(CAPP(CAPP(CS, e1), e2), e3)) =
+                                (CAPP(CAPP(e1, e3), CAPP(e2, e3))) ;
+
+(* adds capp backward to list *)
+fun caddbackapp [] e2 = []|
+    caddbackapp (e1::l) e2 = (CAPP(e1,e2)):: (caddbackapp l e2);
+
+(* adds capp forward to list *)
+fun caddfrontapp e1 [] = []|
+    caddfrontapp e1  (e2::l) = (CAPP(e1,e2)):: (caddfrontapp e1 l);
+
+fun cmreduce (CID id) =  [(CID id)] | 
+    cmreduce (CI) = [(CI)] |
+    cmreduce (CK) = [(CK)] |
+    cmreduce (CS) = [(CS)] |
+    cmreduce (CAPP(e1,e2)) = (let val l1 = (cmreduce e1)
+                val l2 = (cmreduce e2)
+                val l3 = (caddbackapp l1 e2)				
+                val l4 = (caddfrontapp (List.last l1) l2)
+                val l5 = (List.last l4)
+                val l6 =  if (is_credex l5) then (cmreduce (one_credex l5)) 
+                          else [l5]
+                in l3 @ l4 @ l6
+                end);
+                
+ fun Printcredexlist [] =  print "" |
+     Printcredexlist (h::nil) = (printCOM h; print "\n") |
+     Printcredexlist (h::t)= (printCOM h; print "--> \n"; Printcredexlist t);
+
+fun	credex e = (Printcredexlist(ClrDup(cmreduce(e))); 
+                  print (Int.toString(numCredex(e))); print " steps \n");
+	      \end{verbatim}
+	      
+	      For tests:
+	      \begin{itemize}
+	      	\item
+	      	      \begin{verbatim}
+- credex ct1;
+I''
+0 steps
+val it = () : unit
+
+- credex ct2;
+(K'' x)
+0 steps
+val it = () : unit
+
+- credex ct3;
+((I'' (K'' x)) z)-->
+((K'' x) z)-->
+x
+2 steps
+val it = () : unit
+
+- credex ct4;
+(I'' z)-->
+z
+1 steps
+val it = () : unit
+
+- credex ct5;
+(((I'' (K'' x)) z) ((I'' (K'' x)) z))-->
+(((K'' x) z) ((I'' (K'' x)) z))-->
+(x ((I'' (K'' x)) z))-->
+(x ((K'' x) z))-->
+(x x)
+4 steps
+val it = () : unit
+
+- credex ct6;
+S''
+0 steps
+val it = () : unit
+
+- credex ct7;
+((S'' I'') I'')
+0 steps
+val it = () : unit
+
+- credex ct8;
+((S'' I'') I'')
+0 steps
+val it = () : unit
+
+- credex ct9;
+(((S'' I'') I'') ((I'' (K'' x)) z))-->
+(((S'' I'') I'') ((K'' x) z))-->
+(((S'' I'') I'') x)-->
+((I'' x) (I'' x))-->
+(x (I'' x))-->
+(x x)
+5 steps
+val it = () : unit
+
+	      	      \end{verbatim}
+	      	      
+	      \end{itemize}
+	      
+	      \color{black}
+	\item
+	      For creduce in the above question, implement a counter that counts the number of $-->$'s used to reach a normal form.  For example, 
+	      \begin{verbatim}
+- credex ct1;
+I''
+0 steps
+val it = () : unit
+- credex ct2;
+(K'' x)
+0 steps
+val it = () : unit
+
+	      \end{verbatim}
+	      \hfill{(1)} % sets marks in () right justified
+	      
+	      \color{red}
+	      \begin{itemize}
+	      	\item
+	      	      \begin{verbatim}
+(* count the number of redex' *)
+fun numCredex l = List.length (ClrDup(cmreduce(l))) -1 ;
+
+(* print the redex with arrows and a counter at the end *)
+fun	credex e = (Printcredexlist(ClrDup(cmreduce(e))); 
+                   print (Int.toString(numCredex(e))); print " steps \n");
+	      	      \end{verbatim}
+	      	      .......
+	      	      
+	      	      Tests are as follows:
+	      	      \begin{verbatim}
+- credex ct1;
+I''
+0 steps
+val it = () : unit
+
+- credex ct2;
+(K'' x)
+0 steps
+val it = () : unit
+
+- credex ct3;
+((I'' (K'' x)) z)-->
+((K'' x) z)-->
+x
+2 steps
+val it = () : unit
+
+- credex ct4;
+(I'' z)-->
+z
+1 steps
+val it = () : unit
+
+- credex ct5;
+(((I'' (K'' x)) z) ((I'' (K'' x)) z))-->
+(((K'' x) z) ((I'' (K'' x)) z))-->
+(x ((I'' (K'' x)) z))-->
+(x ((K'' x) z))-->
+(x x)
+4 steps
+val it = () : unit
+
+- credex ct6;
+S''
+0 steps
+val it = () : unit
+
+- credex ct7;
+((S'' I'') I'')
+0 steps
+val it = () : unit
+
+- credex ct8;
+((S'' I'') I'')
+0 steps
+val it = () : unit
+
+- credex ct9;
+(((S'' I'') I'') ((I'' (K'' x)) z))-->
+(((S'' I'') I'') ((K'' x) z))-->
+(((S'' I'') I'') x)-->
+((I'' x) (I'' x))-->
+(x (I'' x))-->
+(x x)
+5 steps
+val it = () : unit
+	      	      \end{verbatim}
+	      	      
+	      \end{itemize}
+	      \color{black}
+	\item
+	      Implement $\eta$-reduction on $\cM$ and test it on many examples of your own.
+	      Give the implementation as well as the test showing all the reduction steps one by one until you reach a $\eta$-normal form. 
+	      \hfill{(1)} % sets marks in () right justified
+	      
+	      \color{red}
+	      \begin{verbatim}
+
+fun is_eredex (LAM(id, (APP(e1, e2)))) = (if not(free id e1) andalso (ID id = e2) 
+                                         then true else false) |
+    is_eredex (_) = false;
+
+fun has_eredex (ID id) = false |
+    has_eredex (APP(e1, e2)) = ((has_eredex(e1)) orelse (has_eredex(e2))) |
+    has_eredex (LAM(id, e)) = if (is_eredex(LAM(id, e))) then true else (has_eredex(e));
+
+(* perform eta reduction *)
+fun ered (LAM(id, (APP(e1, e2)))) = e1;
+
+(* find the eta reduction in the term *)
+fun one_ereduce (ID id) = (ID id) |
+    one_ereduce (APP(e1, e2)) = (APP(one_ereduce(e1), one_ereduce(e2))) |
+    one_ereduce (LAM(id, e)) = if (is_eredex(LAM(id, e))) then ered(LAM(id, e)) 
+								else if (has_eredex(e)) then one_ereduce(e)
+								else e;
+
+(* return list of eta reductions of term *)
+fun eloreduce (ID id) =  [(ID id)] |
+    eloreduce (LAM(id,e)) = if (is_eredex(LAM(id,e))) then ([(LAM(id, e))]
+                @(eloreduce (ered(LAM(id,e))))) else (addlam id (eloreduce e)) |
+    eloreduce (APP(e1,e2)) = (let val l1 = 
+                 if (has_eredex e1) then (eloreduce (APP(one_ereduce e1, e2))) 
+                 else if (has_eredex e2) then  
+                    (eloreduce (APP(e1, (one_ereduce e2)))) 
+                 else []
+                 in [APP(e1,e2)]@l1
+			      end);
+			      
+(* prints a list of redex' with arrows *)
+fun Printlredexlist [] =  print "" |
+    Printlredexlist (h::nil) = (printLEXP h; print "\n") |
+    Printlredexlist (h::t)= (printLEXP h; print "--> \n"; Printlredexlist t);
+    
+(* prints eta reduction of arg0 *)
+fun ereduce e = (Printlredexlist(eloreduce(e)));
+
+	      \end{verbatim}
+	      Tests:
+	      \begin{verbatim}
+	      
+- printLEXP t10;
+(\x.(y x))val it = () : unit
+- ereduce t10;
+(\x.(y x))-->
+y
+val it = () : unit
+
+
+- printLEXP t11;
+((\z.((\x.x) z)) (\x.(y x)))val it = () : unit
+- ereduce t11;
+((\z.((\x.x) z)) (\x.(y x)))-->
+((\x.x) (\x.(y x)))-->
+((\x.x) y)
+val it = () : unit
+
+
+- printLEXP t12;
+(\x.((\x.(y x)) ((\z.((\x.x) z)) (\x.(y x)))))val it = () : unit
+- ereduce t12;
+(\x.((\x.(y x)) ((\z.((\x.x) z)) (\x.(y x)))))-->
+(\x.(y ((\z.((\x.x) z)) (\x.(y x)))))-->
+(\x.(y ((\x.x) y)))
+val it = () : unit
+
+
+- printLEXP t13;
+(\x.((\x.((\x.(y x)) ((\z.((\x.x) z)) (\x.(y x))))) x))val it = () : unit
+- ereduce t13;
+(\x.((\x.((\x.(y x)) ((\z.((\x.x) z)) (\x.(y x))))) x))-->
+(\x.((\x.(y x)) ((\z.((\x.x) z)) (\x.(y x)))))-->
+(\x.(y ((\z.((\x.x) z)) (\x.(y x)))))-->
+(\x.(y ((\x.x) y)))
+val it = () : unit
+
+- printLEXP t14;
+((\y.((\x.((\x.((\x.(y x)) ((\z.((\x.x) z)) (\x.(y x))))) x)) y)) 
+                        (\x.(\y.(\z.((x z) (y z))))))val it = () : unit
+- ereduce t14;
+((\y.((\x.((\x.((\x.(y x)) ((\z.((\x.x) z)) 
+                    (\x.(y x))))) x)) y)) (\x.(\y.(\z.((x z) (y z))))))-->
+(((\x.((\x.(y x)) ((\z.((\x.x) z)) (\x.(y x))))) y) 
+                     (\x.(\y.(\z.((x z) (y z))))))-->
+(((y ((\x.x) y)) y) (\x.(\y.(\z.((x z) (y z))))))
+val it = () : unit
+
+
+- printLEXP t15;
+(\x.((\x.x) x))val it = () : unit
+- ereduce t15;
+(\x.((\x.x) x))-->
+(\x.x)
+val it = () : unit
+
+
+- printLEXP t16;
+((\x.((\x.x) x)) (\x.((\x.x) x)))val it = () : unit
+- ereduce t16;
+((\x.((\x.x) x)) (\x.((\x.x) x)))-->
+((\x.x) (\x.((\x.x) x)))-->
+((\x.x) (\x.x))
+val it = () : unit
+
+
+- printLEXP t17;
+(((\x.((\x.x) x)) (\x.((\x.x) x))) ((\x.((\x.x) x)) 
+                       (\x.((\x.x) x))))val it = () : unit
+- ereduce t17;
+(((\x.((\x.x) x)) (\x.((\x.x) x))) ((\x.((\x.x) x)) (\x.((\x.x) x))))-->
+(((\x.x) (\x.x)) ((\x.((\x.x) x)) (\x.((\x.x) x))))-->
+(((\x.x) (\x.x)) ((\x.x) (\x.x)))
+val it = () : unit
+
+- ereduce t1;
+(\x.x)
+val it = () : unit
+
+	      \end{verbatim}
+	      \color{black}
+	      
+	\item
+	      Give an implementation of leftmost reduction in $\cM$ and test it on a  number of rich examples.
+	      \hfill{(1)} % sets marks in () right justified
+	      
+	      \color{red}
+	      \begin{itemize}
+	      	\item
+	      	      Leftmost is printloreduce in the data-files.sml (and it needs all the necessary functions in that file).  
+	      	      \begin{verbatim}
+(* use given function loreduce() from data files *)
+
+(* counts number of reduction steps *)
+fun numLredex l = List.length (ClrDup(loreduce(l))) -1 ;
+
+(* uses helper function from Question 10 to print reductions with
+ arrows and counter *)
+fun leftreduce e = (Printlredexlist(loreduce(e)); 
+                    print (Int.toString(numLredex(e))); print " steps \n");
+	      	      \end{verbatim}
+	      	      \item
+	      	      Tests
+	      	      \begin{verbatim}
+- leftreduce vx;
+x
+0 steps
+val it = () : unit
+
+- leftreduce t1;
+(\x.x)
+0 steps
+val it = () : unit
+
+- leftreduce t3;
+(((\x.x) (\y.x)) z)-->
+((\y.x) z)-->
+x
+2 steps
+val it = () : unit
+
+- leftreduce t5;
+((((\x.x) (\y.x)) z) (((\x.x) (\y.x)) z))-->
+(((\y.x) z) (((\x.x) (\y.x)) z))-->
+(x (((\x.x) (\y.x)) z))-->
+(x ((\y.x) z))-->
+(x x)
+4 steps
+val it = () : unit
+
+- leftreduce t6;
+(\x.(\y.(\z.((x z) (y z)))))
+0 steps
+val it = () : unit
+
+- leftreduce t7;
+(((\x.(\y.(\z.((x z) (y z))))) (\x.x)) (\x.x))-->
+((\y.(\z.(((\x.x) z) (y z)))) (\x.x))-->
+(\z.(((\x.x) z) ((\x.x) z)))-->
+(\z.(z ((\x.x) z)))-->
+(\z.(z z))
+4 steps
+
+- leftreduce t9;
+((\z.(z ((\x.x) z))) (((\x.x) (\y.x)) z))-->
+((((\x.x) (\y.x)) z) ((\x.x) (((\x.x) (\y.x)) z)))-->
+(((\y.x) z) ((\x.x) (((\x.x) (\y.x)) z)))-->
+(x ((\x.x) (((\x.x) (\y.x)) z)))-->
+(x (((\x.x) (\y.x)) z))-->
+(x ((\y.x) z))-->
+(x x)
+6 steps
+
+- leftreduce t17;
+(((\x.((\x.x) x)) (\x.((\x.x) x))) ((\x.((\x.x) x)) (\x.((\x.x) x))))-->
+(((\x.x) (\x.((\x.x) x))) ((\x.((\x.x) x)) (\x.((\x.x) x))))-->
+((\x.((\x.x) x)) ((\x.((\x.x) x)) (\x.((\x.x) x))))-->
+((\x.x) ((\x.((\x.x) x)) (\x.((\x.x) x))))-->
+((\x.((\x.x) x)) (\x.((\x.x) x)))-->
+((\x.x) (\x.((\x.x) x)))-->
+(\x.((\x.x) x))-->
+(\x.x)
+7 steps
+	      	      \end{verbatim}
+	      	      
+	      \end{itemize}
+	      \color{black}
+\end{enumerate}
+\newpage
+
+\begin{center}
+	\Huge{DATA SHEET}
+\end{center}
+
+%\vspace{-0.5in}
+
+At \url{http://www.macs.hw.ac.uk/~fairouz/foundations-2019/slides/data-files.sml}, you find an implementation in SML of the set of
+terms $\cM$ and many operations on it.  You can use all of these in your assignment.  You can also use any other help SML functions I have given you.  Anything you use from anywhere has to be well cited/referenced.
+
+\begin{itemize}
+	%\vspace{-0.5in}
+	\item
+	      %$\dagger$ 
+	      The syntax of the classical $\lambda$-calculus is given by
+	      $\cM  \: ::=  \:  {\cal V} \:|\: ( \la{{\cal V}}.{\cM}) \:|\: ( \cM \cM)$.\\
+	      We assume the usual notational conventions in $\cM$ and use 
+	      the reduction rule: \\$\underline{(\la v. P)Q} \rightarrow_\be P[v:=Q]$.
+	\item
+	      %$\dagger$ 
+	      The syntax of the  $\lambda$-calculus in item notation is given by
+	      $\cM'  \: ::=  \:  {\cal V} \:|\: [{\cal V}]\cM' \:|\: \langle\cM'\rangle\cM'$.\\
+	      We use the reduction rule: 
+	      $ \underline{\langle Q'\rangle[v]}P' \rightarrow_{\be'} [x:=Q']P'$.
+	      %\vspace{-0.15in}
+	\item
+	      %$\dagger$ 
+	      In $\cM$, $(PQ)$ stands for the application of function $P$ to argument $Q$.
+	\item
+	      %$\dagger$ 
+	      In $\cM'$, $\langle Q'\rangle P'$ stands for the application of function $P'$ to argument $Q'$ (note the reverse order).
+	      %\vspace{-0.15in}
+	\item
+	      %$\dagger$ 
+	      The syntax of the classical $\lambda$-calculus with de Bruijn indices is given by\\
+	      $\Lambda  \: ::=  \:  {\mathbb{N}} \:|\: ( \la{}{\Lambda}) \:|\: ( \Lambda \Lambda)$.
+	      %\vspace{-0.15in}
+	\item
+	      %$\dagger$ 
+	      We define free variables in 
+	      the classical $\lambda$-calculus with de Bruijn indices as follows:
+	      $FV(n) = \{n\}$, $FV(AB) = FV(A)\cup FV(B)$ and $FV(\lambda A) = FV(A)\setminus\{1\}$.
+	      %\vspace{-0.15in}
+	\item
+	      %$\dagger$  
+	      For $[x_1,\cdots, x_n]$ a list (not a set) of variables, 
+	      we define $\omega_{[x_1,\cdots, x_n]}: \cM \mapsto$ $\Lambda$ inductively by:
+	      \begin{center}
+	      	\begin{tabular}{lll}
+	      		$\omega_{[x_1,\cdots, x_n]}(v_i)$          & = & $\min\{j:v_i \equiv x_j\}$                                   \\
+	      		$\omega_{[x_1,\cdots, x_n]}(AB)  $         & = & $\omega_{[x_1,\cdots, x_n]}(A)\omega_{[x_1,\cdots, x_n]}(B)$ \\
+	      		$\omega_{[x_1,\cdots, x_n]}(\lambda x.A) $ & = & $\lambda \omega_{[x,x_1,\cdots, x_n]}(A)$                    
+	      	\end{tabular}
+	      \end{center}
+	      
+	      Hence $\omega_{[x, y, x,y,z]}(x) = 1$, $\omega_{[x, y, x,y,z]}(y) = 2$ and $\omega_{[x, y, x,y,z]}(z) = 5$.\\
+	      Also $\omega_{[x, y, x,y,z]}(xyz) = 1\:2\:5$.\\
+	      Also $\omega_{[x, y, x,y,z]}(\lambda xy.xz) = \lambda \lambda 2\:7$.
+	\item
+	      Assume our variables are ordered as follows: $v_1, v_2, v_3, \cdots$.\\
+	      We define $\omega : \cM \mapsto$ $\Lambda$
+	      by $\omega(A) = \omega_{[v_1,\cdots, v_n]}(A)$ where 
+	      $FV(A) \subseteq \{v_1,\cdots,v_n\}$.\\
+	      So for example, if our variables are ordered as $x,y,z,x',y',z', \cdots$ then $\omega(\lambda xyx'.xzx')
+	      = \omega_{[x,y,z]}(\lambda xyx'.xzx') = \lambda\omega_{[x,x,y,z]}(\lambda yx'.xzx') = \lambda\lambda\omega_{[y,x,x,y,z]}(\lambda x'.xzx') = \lambda\lambda\lambda\omega_{[x',y,x,x,y,z]}(xzx') = \lambda\lambda\lambda 3\:6\:1$.
+	      %\vspace{-0.15in}
+	\item
+	      %$\dagger$ 
+	      The syntax of the $\lambda$-calculus in item notation and de Bruijn indices is given by\\
+	      $\Lambda'  \: ::=  \:  {\mathbb{N}} \:|\: [\:]{\Lambda'} \:|\: \langle \Lambda' \rangle \Lambda'$.
+	      %\vspace{-0.15in}
+	\item
+	      %$\dagger$ 
+	      The syntax of combinatory logic is given by\\
+	      $\cM''  \: ::=  \:  {\cal V} \:|\: \cI \:|\: \cK \:|\:\mycS\:|\: (\cM''\cM'')$\\
+	      We assume that application associates to the left in $\cM''$. I.e., $P''Q''R''$ stands for $((P''Q'')R'')$.\\
+	      We use  the reduction rules: \\
+	      $(\cI) \: \:  \underline{\cI P''} =_c P'' \hspace{0.5in} (\cK) \: \:  \underline{\cK P''Q''} =_c P'' \hspace{0.5in} (\mycS) \:\:   \underline{\mycS P''Q''R''} =_c P''R''(Q''R'')$.\\
+	      Note that these rules are from left to right (and not right to left) even though they are written with an $=$ sign.
+	\item
+	      %$\dagger$ 
+	      We define free variables in combinatory logic as follows:\\
+	      $FV''(v) = \{v\}$\\
+	      $FV''(\cI) = FV''(\cK) = FV''(\mycS) = \{\}$\\ $FV''(P''Q'') = FV''(P'')\cup FV''(Q'')$.
+	\item
+	      %$\dagger$ 
+	      Here is a possible translation function $T$ from ${\cal M}'$ to ${\cal M}''$:\\
+	      $T(v) = v      \hspace{0.5in} \: \: T([v]P') = f(v, T(P'))  \: \: \hspace{0.5in}  T(\langle Q' \rangle P') = (T(P')T(Q'))$ where\\
+	      $f$ takes a variable and a combinator-term and returns a combinator term according to the following numbered clauses:\\
+	      1. $f(v,v) = I''   \hspace{0.5in}   \: \:$\\  2. $f(v,P'')=  K''P''  \mbox{  if $v \not \in FV(P'')$}   \: \:  \hspace{0.5in} $\\
+	      3. $f(v,P''_1P''_2)=  \begin{cases}
+	      P''_1 &\quad\mbox{if $v \not \in FV(P''_1)$ and $P''_2 \equiv v$}\\
+	      S''f(v,P''_1)f(v,P''_2) & \quad\mbox{otherwise.} 
+	\end{cases}$
+	%\vspace{-0.15in}
+	\item
+	      %$\dagger$ 
+	      Assume the following SML  datatypes which implement ${\cal M}$, $\Lambda$, ${\cal M}'$, $\Lambda'$ and ${\cal M}''$ respectively (here, if \texttt{e1} implements $A'_1$ and \texttt{e2} implements $A'_2$, then 
+	      \texttt{IAPP(e1,e2)} implements $\langle A'_1\rangle A'_2$ which  stands for the function$A'_2$ applied to argument$A'_1$):
+	      %\vspace{-0.6in}
+	      \begin{verbatim}
+datatype LEXP =  
+   APP of LEXP * LEXP | LAM of string *  LEXP |  ID of string;
+
+datatype BEXP =  
+   BAPP of BEXP * BEXP | BLAM of BEXP |  BID of int;
+
+datatype IEXP =  
+   IAPP of IEXP * IEXP | ILAM of string *  IEXP |  IID of string;
+
+datatype IBEXP =  
+   IBAPP of IBEXP * IBEXP | IBLAM of    IBEXP |  IBID of int;
+
+datatype COM = CAPP of COM*COM | CID of string | CI | CK | CS;
+	      \end{verbatim}
+\end{itemize}
+
+
+\end{document}

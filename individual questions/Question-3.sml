@@ -58,9 +58,12 @@ val ct2 = (CAPP(CK, cvx)); (* K'' x *)
 val ct3 = (CAPP(CAPP(ct1,ct2),cvz)); (* I'' (K'' x) z *)
 val ct4 = (CAPP(ct1,cvz)); (* I'' z *)
 val ct5 = (CAPP(ct3,ct3)); (* I''(K''x)z (I''(K''x)z) *)
-val ct6 = CS; (* (Clambda-xyz).xz(yz) *)
-val ct7 = CAPP(CAPP(ct6,ct1),ct1); (* ((t6,t1)t1) *)
-val ct8 = CAPP(CAPP(CS, CI), CI);
-val ct9 = CAPP(ct8,ct3); (* (t8,t3) *)
+val ct6 = CS; (* S'' *)
+val ct7 = CAPP(CAPP(ct6,ct1),ct1); (* S'' I'' I'' *)
+val ct8 = CAPP(CAPP(CS, CI), CI); (* S'' I'' I'' *)
+val ct9 = CAPP(ct8,ct3); (* S'' I'' I'' (I'' (K'' x) z) *)
 
 val ct10 = CAPP((CAPP(CI, CAPP(CAPP(CI, CAPP(CK, cvx)), cvz))), (CAPP(CI, CAPP(CAPP(CI, CAPP(CK, cvx)), cvz))));
+
+
+
