@@ -36,8 +36,8 @@ val bt4 = (BAPP(bt1,bvz)); (* (\1)3 *)
 val bt5 = (BAPP(bt3,bt3)); (* (\1)(\2)3 ((\1)(\2)3) *)
 val bt6 = (BLAM(BLAM(BLAM(BAPP(BAPP(BID 3,BID 1),(BAPP(BID 2,BID 1))))))); (* \\\31(21) *)
 val bt7 = (BAPP(BAPP(bt6,bt1),bt1)); (* ((\\\31(21))(\1))(\1) *)
-val bt8 = (BLAM(BAPP(BID 1,(BAPP(bt1,BID 1))))); (* ( \1((\1)1) ) THIS WILL NOT PRINT CORRECTLY BY DEFAULT *)
-val bt9 = (BAPP(bt8,bt3)); (* (\1((\1)1))((\1)(\2)3) WONT PRINT BY DEFAULT *)
+val bt8 = (BLAM(BAPP(BID 1,(BAPP(bt1,BID 1))))); (* ( \1((\1)1) ) *)
+val bt9 = (BAPP(bt8,bt3)); (* (\1((\1)1))((\1)(\2)3) *)
 
 (* de Bruijn item notation *)
 datatype IBLEXP =  IBAPP of IBLEXP * IBLEXP | IBLAM of IBLEXP |  IBID of int;
